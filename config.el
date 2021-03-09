@@ -53,7 +53,67 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+;;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+;;(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+;;  (setq scroll-step 1) ;; keyboard scroll one line at a time
 
-(setq display-line-numbers-type 'relative)
+;;(require 'sublimity)
+;;(require 'sublimity-scroll)
+;;(sublimity-mode 1)
+
+(setq scroll-step 1)
+   (setq scroll-conservatively 10000)
+    (setq auto-window-vscroll nil)
+  
+;;    (setq scroll-margin 1
+;;      scroll-conservatively 0
+;;      scroll-up-aggressively 0.01
+;;      scroll-down-aggressively 0.01)
+;;    (setq-default scroll-up-aggressively 0.01
+;;      scroll-down-aggressively 0.01)
+
+;;   (setq redisplay-dont-pause t
+;;  scroll-margin 1
+;;  scroll-step 1
+;;  scroll-conservatively 10000
+;;  scroll-preserve-screen-position 1)   
+;;   (setq scroll-step 1)
+;;   (setq scroll-conservatively 10000)
+;;   (setq auto-window-vscroll nil)
+ 
+(setq display-line-numbers-type 'relative);; relative line numbers(like in vim)
 (setq european-calendar-style 't)
-(setq calendar-week-start-day 1)
+(setq calendar-week-start-day 1);; weeks start on monday
+(add-hook 'c-mode-hook #'rainbow-mode)
+
+(setq doc-view-continuous t);; scrolling in pdf file
+
+(after! org
+ (setq org-todo-keywords
+       '((sequence "TODO(t)"
+                   "PROJ(p)"
+                   "LOOP(R)"
+                   "STRT(s)"
+                   "WAIT(w)"
+                   "LECTURE(l)"
+                   "ROUTINE(r)"
+                   "HOLD(h)"
+                   "IDEA(i)"
+                   "|"
+                   "DONE(d)"
+                   "KILL(k)")
+     (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+     (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
+ (setq org-todo-keyword-faces
+   '(("[-]" . +org-todo-active)
+     ("STRT" . +org-todo-active)
+     ("[?]" . +org-todo-onhold)
+     ("WAIT" . +org-todo-onhold)
+     ("HOLD" . +org-todo-onhold)
+     ("PROJ" . +org-todo-project)
+     ("LECTURE" . (:foreground "orange"))
+     ("ROUTINE" . (:foreground "violet"))
+     ("NO" . +org-todo-cancel)
+     ("KILL" . +org-todo-cancel)))
+ )
