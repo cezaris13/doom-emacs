@@ -117,3 +117,6 @@
      ("NO" . +org-todo-cancel)
      ("KILL" . +org-todo-cancel)))
  )
+(global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
+(global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
+(save-place-mode 1)
