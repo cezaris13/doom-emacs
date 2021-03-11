@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: test(parent):
+# key: test
+# group: Minitest
+# condition: t
+# --
+classi ${1:Object}(${2:sthels})
+       ${3:class_name}
+kazks ${4:$1}
+`(current-time-string)`

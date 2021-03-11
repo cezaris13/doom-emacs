@@ -29,12 +29,11 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "~/Desktop/Org_mode/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
+(setq display-line-numbers-type 'relative);; relative line numbers(like in vim)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -53,36 +52,10 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
-;;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-;;(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-;;  (setq scroll-step 1) ;; keyboard scroll one line at a time
-
-;;(require 'sublimity)
-;;(require 'sublimity-scroll)
-;;(sublimity-mode 1)
-
-(setq scroll-step 1)
-   (setq scroll-conservatively 10000)
-    (setq auto-window-vscroll nil)
+(setq scroll-step 1);;scrolling settings
+(setq scroll-conservatively 10000)
+(setq auto-window-vscroll nil)
   
-;;    (setq scroll-margin 1
-;;      scroll-conservatively 0
-;;      scroll-up-aggressively 0.01
-;;      scroll-down-aggressively 0.01)
-;;    (setq-default scroll-up-aggressively 0.01
-;;      scroll-down-aggressively 0.01)
-
-;;   (setq redisplay-dont-pause t
-;;  scroll-margin 1
-;;  scroll-step 1
-;;  scroll-conservatively 10000
-;;  scroll-preserve-screen-position 1)   
-;;   (setq scroll-step 1)
-;;   (setq scroll-conservatively 10000)
-;;   (setq auto-window-vscroll nil)
- 
-(setq display-line-numbers-type 'relative);; relative line numbers(like in vim)
 (setq european-calendar-style 't)
 (setq calendar-week-start-day 1);; weeks start on monday
 (add-hook 'c-mode-hook #'rainbow-mode)
@@ -103,8 +76,8 @@
                    "|"
                    "DONE(d)"
                    "KILL(k)")
-     (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
-     (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
+       (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+       (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
  (setq org-todo-keyword-faces
    '(("[-]" . +org-todo-active)
      ("STRT" . +org-todo-active)
@@ -120,3 +93,10 @@
 (global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
 (global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
 (save-place-mode 1)
+(setq mouse-wheel-tilt-scroll t)
+(setq lsp-modeline-code-actions-enable t)
+(setq lsp-ui-sideline-enable nil)
+(setq lsp-ui-sideline-show-hover nil)
+(setq company-idle-delay 0.1)
+(setq company-meghanada-prefix-length 3)
+(yas-global-mode 1)
