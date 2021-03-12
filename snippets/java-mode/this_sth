@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: this.sth
+# uuid:
+# key: this
+# condition: t
+# --
+this.${1:var}=$1;
+$0
