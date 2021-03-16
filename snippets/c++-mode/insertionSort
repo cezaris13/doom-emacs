@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: insertionSort
+# uuid:
+# key: insertionSort
+# condition: t
+# --
+void insertionSort(${1:int} ${2:arr}[],int n){
+    int i,j;
+    $1 key;
+    for (i=1;i<n;i++){
+        key=$2[i];
+        j=i-1;
+        while (j>=0&&$2[j]>key){
+            $2[j+1]=$2[j];
+            j=j-1;
+        }
+        $2[j+1]=key;
+    }
+}
+$0

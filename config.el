@@ -99,4 +99,9 @@
 (setq lsp-ui-sideline-show-hover nil)
 (setq company-idle-delay 0.1)
 (setq company-meghanada-prefix-length 3)
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(setq org-bullets-bullet-list '("◉" "○"))
 (yas-global-mode 1)
+(setq fancy-splash-image "~/.doom.d/splash/default.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+;; (setq fancy-splash-image "~/.emacs.d/modules/ui/doom-dashboard/banners/default.png")
