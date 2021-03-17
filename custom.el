@@ -17,7 +17,30 @@
  '(org-scheduled-past-days 0)
  '(org-todo-repeat-to-state t)
  '(package-selected-packages
-   '(org-bullets better-scroll helm company-lsp xresources-theme evil-multiedit auto-complete yasnippet-snippets lsp-javacomp emojify minimap quickrun meghanada lsp-java scroll-restore sublimity fast-scroll company-irony irony rainbow-mode treemacs-perspective treemacs-projectile nix-haskell-mode pager-default-keybindings smooth-scrolling))
+   '(org-bullets better-scroll
+                 helm
+                 company-lsp
+                 xresources-theme
+                 evil-multiedit
+                 auto-complete
+                 yasnippet-snippets
+                 lsp-javacomp
+                 emojify
+                 minimap
+                 quickrun
+                 meghanada
+                 lsp-java
+                 scroll-restore
+                 sublimity
+                 fast-scroll
+                 company-irony
+                 irony
+                 rainbow-mode
+                 treemacs-perspective
+                 treemacs-projectile
+                 nix-haskell-mode
+                 pager-default-keybindings
+                 smooth-scrolling))
  '(safe-local-variable-values '((org-todo-keyword-faces . org-todo-keyword-faces:)))
  '(scroll-conservatively 1000)
  '(scroll-margin 3)

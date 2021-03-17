@@ -105,3 +105,9 @@
 (yas-global-mode 1)
 (setq fancy-splash-image "~/.doom.d/splash/default.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
 ;; (setq fancy-splash-image "~/.emacs.d/modules/ui/doom-dashboard/banners/default.png")
+(defun dolphin ()
+  "Opens dolphin in the current directory"
+  (interactive)
+  (call-process-shell-command "dolphin . &" nil 0))
+
+(global-set-key (kbd "<f3>") 'dolphin); Or whatever key you want...
