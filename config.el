@@ -14,9 +14,8 @@
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
 
-(setq scroll-step 1);;scrolling settings
-(setq scroll-conservatively 10000)
-(setq auto-window-vscroll nil)
+(setq european-calendar-style 't)
+(setq calendar-week-start-day 1);; weeks start on monday
 
 (after! org
   (setq org-todo-keywords
