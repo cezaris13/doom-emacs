@@ -138,6 +138,15 @@
 (global-set-key (kbd "<f3>") 'dolphin); Or whatever key you want...
 
 #+end_src
+**** Termite
+#+begin_src emacs-lisp
+(defun termite ()
+  "Opens dolphin in the current directory"
+  (interactive)
+  (call-process-shell-command "termite . &" nil 0))
+(global-set-key (kbd "<f1>") 'termite); Or whatever key you want...
+
+#+end_src
 *** misc
 #+begin_src emacs-lisp
 (save-place-mode 1)
