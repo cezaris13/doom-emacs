@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: speed
+# uuid:
+# key: speed
+# condition: t
+# --
+ios_base::sync_with_stdio(false);
+cin.tie(NULL);
+cout.tie(NULL);
+$0

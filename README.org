@@ -141,12 +141,28 @@
 **** Termite
 #+begin_src emacs-lisp
 (defun termite ()
-  "Opens dolphin in the current directory"
+  "Opens termite in the current directory"
   (interactive)
   (call-process-shell-command "termite . &" nil 0))
-(global-set-key (kbd "<f1>") 'termite); Or whatever key you want...
+(global-set-key (kbd "<f1>") 'termite)
 
 #+end_src
+**** Line numbers(fix this later)
+#+begin_src emacs-lisp
+(defun line_numbers ()
+  "Changes line number mode"
+  (interactive)
+  (if (equal display-line-numbers-type (make-symbol "relative"))
+      (setq display-line-numbers-type 't)
+      (setq display-line-numbers-type 'relative)
+    )
+  )
+(global-set-key (kbd "<f4>") 'line_numbers)
+#+end_src
+
+#+RESULTS:
+: line_numbers
+
 *** misc
 #+begin_src emacs-lisp
 (save-place-mode 1)

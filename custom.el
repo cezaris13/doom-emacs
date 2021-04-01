@@ -8,6 +8,7 @@
  '(cua-mode nil nil (cua-base))
  '(custom-safe-themes
    '("79278310dd6cacf2d2f491063c4ab8b129fee2a498e4c25912ddaa6c3c5b621e" "8f5a7a9a3c510ef9cbb88e600c0b4c53cdcdb502cfe3eb50040b7e13c6f4e78e" "7d708f0168f54b90fc91692811263c995bebb9f68b8b7525d0e2200da9bc903c" "0fe24de6d37ea5a7724c56f0bb01efcbb3fe999a6e461ec1392f3c3b105cc5ac" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "aaa4c36ce00e572784d424554dcc9641c82d1155370770e231e10c649b59a074" default))
+ '(display-line-numbers-type 'visual)
  '(org-agenda-files
    '("~/Desktop/Org_mode/miniTest.org" "~/Desktop/Org_mode/todo.org" "~/Desktop/Org_mode/droutine.org" "~/Desktop/Org_mode/org-mode.org"))
  '(org-agenda-log-mode-items '(closed clock state))

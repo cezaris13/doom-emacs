@@ -72,10 +72,20 @@
 (global-set-key (kbd "<f3>") 'dolphin); Or whatever key you want...
 
 (defun termite ()
-  "Opens dolphin in the current directory"
+  "Opens termite in the current directory"
   (interactive)
   (call-process-shell-command "termite . &" nil 0))
-(global-set-key (kbd "<f1>") 'termite); Or whatever key you want...
+(global-set-key (kbd "<f1>") 'termite)
+
+(defun line_numbers ()
+  "Changes line number mode"
+  (interactive)
+  (if (equal display-line-numbers-type (make-symbol "relative"))
+      (setq display-line-numbers-type 't)
+      (setq display-line-numbers-type 'relative)
+    )
+  )
+(global-set-key (kbd "<f4>") 'line_numbers)
 
 (save-place-mode 1)
 (yas-global-mode 1)
