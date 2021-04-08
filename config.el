@@ -77,15 +77,25 @@
   (call-process-shell-command "termite . &" nil 0))
 (global-set-key (kbd "<f1>") 'termite)
 
-(defun line_numbers ()
-  "Changes line number mode"
+(defvar-local last-mode nil
+  "Buffer-local variable to store last mode in.")
+
+(defun toggle-linum-mode ()
+  "Toggle the mode between the current mode and `linum-mode'."
   (interactive)
-  (if (equal display-line-numbers-type (make-symbol "relative"))
-      (setq display-line-numbers-type 't)
-      (setq display-line-numbers-type 'relative)
-    )
-  )
-(global-set-key (kbd "<f4>") 'line_numbers)
+  (make-local-variable 'last-mode)
+  (put 'last-mode 'permanent-local t)
+  (if (eq nil 'linum-mode)
+      (progn
+        ;; (message "switch back to %s" last-mode)
+        ;; (funcall last-mode)
+        (setq linum-mode 1))
+    ;; This means you are in the native mode you started in and now want to
+    ;; switch to org-mode
+    ;; (message "switch to o from %s" minor-mode)
+    ;; (setq last-mode nil)
+    (linum-mode)))
+(global-set-key (kbd "<f4>") 'toggle-linum-mode)
 
 (save-place-mode 1)
 (yas-global-mode 1)
