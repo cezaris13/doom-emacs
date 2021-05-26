@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
-# name: speed
+# name: Cspeed
 # uuid:
-# key: speed
+# key: Sspeed
 # condition: t
 # --
 ios_base::sync_with_stdio(false);

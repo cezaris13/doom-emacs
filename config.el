@@ -13,6 +13,11 @@
 (setq scroll-step 1);;scrolling settings
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
+(setq redisplay-dont-pause t
+  scroll-margin 1
+  scroll-step 1
+  scroll-conservatively 10000
+  scroll-preserve-screen-position 1)
 
 (setq european-calendar-style 't)
 (setq calendar-week-start-day 1);; weeks start on monday
@@ -102,8 +107,14 @@
 (setq fancy-splash-image "~/.doom.d/splash/default.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
 (add-hook 'c-mode-hook #'rainbow-mode)
 (setq doc-view-continuous t);; scrolling in pdf file
-(setq redisplay-dont-pause t
-  scroll-margin 1
-  scroll-step 1
-  scroll-conservatively 10000
-  scroll-preserve-screen-position 1)
+
+(setq package-check-signature nil)
+(use-package org-gcal
+:ensure t
+:config
+(setq org-gcal-client-id "866929913823-05tsfr469sf180ncvq0pgum5kju1nve3.apps.googleusercontent.com"
+org-gcal-client-secret "D4FEgO054YCjcpZ0n_WSz6zD"
+org-gcal-file-alist '(("pijus.petkevicius314@gmail.com" .  "~/Desktop/org_mode/gcal.org"))))
+
+(add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+(add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
