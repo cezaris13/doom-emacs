@@ -195,7 +195,7 @@
 :config
 (setq org-gcal-client-id "866929913823-05tsfr469sf180ncvq0pgum5kju1nve3.apps.googleusercontent.com"
 org-gcal-client-secret "D4FEgO054YCjcpZ0n_WSz6zD"
-org-gcal-file-alist '(("pijus.petkevicius314@gmail.com" .  "~/Desktop/org_mode/gcal.org"))))
+org-gcal-file-alist '(("pijus.petkevicius314@gmail.com" .  "~/Desktop/Org_mode/gcal.org"))))
 
 (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
 (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
