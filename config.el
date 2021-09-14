@@ -102,6 +102,8 @@
     (setq linum-mode 'nil)))
 (global-set-key (kbd "<f4>") 'toggle-linum-mode);; fix toggling
 
+(global-set-key [f12] 'xref-find-definitions)
+
 (save-place-mode 1)
 (yas-global-mode 1)
 (setq fancy-splash-image "~/.doom.d/splash/default.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo

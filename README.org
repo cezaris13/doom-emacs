@@ -174,9 +174,12 @@
     (setq linum-mode 'nil)))
 (global-set-key (kbd "<f4>") 'toggle-linum-mode);; fix toggling
 #+end_src
-
+**** Find definition
+#+begin_src emacs-lisp
+(global-set-key [f12] 'xref-find-definitions)
+#+end_src
 #+RESULTS:
-: toggle-linum-mode
+: xref-find-definitions
 
 *** misc
 #+begin_src emacs-lisp
