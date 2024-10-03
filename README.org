@@ -10,6 +10,8 @@
   - [[#line-number-style][Line number style]]
   - [[#additional-info][Additional info]]
   - [[#my-custom-thingies][my custom thingies]]
+  - [[#hlint-for-haskell][Hlint for haskell]]
+  - [[#omnisharp][Omnisharp]]
 
 * Emacs config
  this is my custom doom emacs configuration(maybe someday i'll make my own)
@@ -148,7 +150,7 @@
 (defun termite ()
   "Opens termite in the current directory"
   (interactive)
-  (call-process-shell-command "termite . &" nil 0))
+  (call-process-shell-command "termite &" nil 0))
 (global-set-key (kbd "<f1>") 'termite)
 
 #+end_src
@@ -192,15 +194,46 @@
 #+end_src
 *** Google calendar thingie
 #+begin_src emacs-lisp
-(setq package-check-signature nil)
-(use-package org-gcal
-:ensure t
-:config
-(setq org-gcal-client-id "866929913823-05tsfr469sf180ncvq0pgum5kju1nve3.apps.googleusercontent.com"
-org-gcal-client-secret "D4FEgO054YCjcpZ0n_WSz6zD"
-org-gcal-file-alist '(("pijus.petkevicius314@gmail.com" .  "~/Desktop/Org_mode/gcal.org"))))
+;; (setq package-check-signature nil)
+;; (use-package org-gcal
+;; :ensure t
+;; :config
+;; (setq org-gcal-client-id "866929913823-05tsfr469sf180ncvq0pgum5kju1nve3.apps.googleusercontent.com"
+;; org-gcal-client-secret "D4FEgO054YCjcpZ0n_WSz6zD"
+;; org-gcal-file-alist '(("pijus.petkevicius314@gmail.com" .  "~/Desktop/Org_mode/gcal.org"))))
 
-(add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
-(add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+;; (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 
+#+end_src
+** Hlint for haskell
+#+begin_src emacs-lisp
+(require 'flymake-haskell-multi)
+  (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
+#+end_src
+
+** Omnisharp
+#+begin_src emacs-lisp
+  (use-package omnisharp
+             :after company
+             :init
+             (add-to-list 'company-backends 'company-omnisharp)
+             (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
+             :config
+             (defun my-csharp-mode-setup ()
+               (omnisharp-mode)
+               (company-mode)
+               (flycheck-mode)
+               (setq indent-tabs-mode nil)
+               (setq c-syntactic-indentation t)
+               (c-set-style "ellemtel")
+               (setq c-basic-offset 4)
+               (setq truncate-lines t)
+               (setq tab-width 4)
+               (setq evil-shift-width 4)
+               ;;csharp-mode README.md recommends this too
+               ;;(electric-pair-mode 1)       ;; Emacs 24
+               ;;(electric-pair-local-mode 1) ;; Emacs 25
+               )
+             :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
 #+end_src
