@@ -1,8 +1,8 @@
 (setq user-full-name "Pijus Petkevičius"
       user-mail-address "pijus.petkevicius314@gmail.com")
 
- ;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
- ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 (setq doom-theme 'doom-one)
 
@@ -79,7 +79,7 @@
 (defun termite ()
   "Opens termite in the current directory"
   (interactive)
-  (call-process-shell-command "termite . &" nil 0))
+  (call-process-shell-command "alacritty  &" nil 0))
 (global-set-key (kbd "<f1>") 'termite)
 
 (defvar-local last-mode nil
@@ -106,17 +106,43 @@
 
 (save-place-mode 1)
 (yas-global-mode 1)
-(setq fancy-splash-image "~/.doom.d/splash/default.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+(setq fancy-splash-image "~/.config/doom/splash/default.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
 (add-hook 'c-mode-hook #'rainbow-mode)
 (setq doc-view-continuous t);; scrolling in pdf file
 
-(setq package-check-signature nil)
-(use-package org-gcal
-:ensure t
-:config
-(setq org-gcal-client-id "866929913823-05tsfr469sf180ncvq0pgum5kju1nve3.apps.googleusercontent.com"
-org-gcal-client-secret "D4FEgO054YCjcpZ0n_WSz6zD"
-org-gcal-file-alist '(("pijus.petkevicius314@gmail.com" .  "~/Desktop/Org_mode/gcal.org"))))
+;; (setq package-check-signature nil)
+;; (use-package org-gcal
+;; :ensure t
+;; :config
+;; (setq org-gcal-client-id "866929913823-05tsfr469sf180ncvq0pgum5kju1nve3.apps.googleusercontent.com"
+;; org-gcal-client-secret "D4FEgO054YCjcpZ0n_WSz6zD"
+;; org-gcal-file-alist '(("pijus.petkevicius314@gmail.com" .  "~/Desktop/Org_mode/gcal.org"))))
 
-(add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
-(add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+;; (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+
+;; (require 'flymake-haskell-multi)
+;;   (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
+
+;; (use-package omnisharp
+;;            :after company
+;;            :init
+;;            (add-to-list 'company-backends 'company-omnisharp)
+;;            (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
+;;            :config
+;;            (defun my-csharp-mode-setup ()
+;;              (omnisharp-mode)
+;;              (company-mode)
+;;              (flycheck-mode)
+;;              (setq indent-tabs-mode nil)
+;;              (setq c-syntactic-indentation t)
+;;              (c-set-style "ellemtel")
+;;              (setq c-basic-offset 4)
+;;              (setq truncate-lines t)
+;;              (setq tab-width 4)
+;;              (setq evil-shift-width 4)
+;;              ;;csharp-mode README.md recommends this too
+;;              ;;(electric-pair-mode 1)       ;; Emacs 24
+;;              ;;(electric-pair-local-mode 1) ;; Emacs 25
+;;              )
+;;            :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))

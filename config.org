@@ -1,0 +1,239 @@
+#+TITLE: Emacs config
+#+PROPERTY: header-args :tangle config.el
+* Table of contents :TOC:
+- [[#emacs-config][Emacs config]]
+- [[#configuration][configuration]]
+  - [[#user-data][user data]]
+  - [[#font][Font]]
+  - [[#theme][theme]]
+  - [[#org-location][Org location]]
+  - [[#line-number-style][Line number style]]
+  - [[#additional-info][Additional info]]
+  - [[#my-custom-thingies][my custom thingies]]
+  - [[#hlint-for-haskell][Hlint for haskell]]
+  - [[#omnisharp][Omnisharp]]
+
+* Emacs config
+ this is my custom doom emacs configuration(maybe someday i'll make my own)
+* configuration
+** user data
+- Place your private configuration here! Remember, you do not need to run 'doom sync' after modifying this file!
+- Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets.
+#+begin_src emacs-lisp
+(setq user-full-name "Pijus Petkevičius"
+      user-mail-address "pijus.petkevicius314@gmail.com")
+#+end_src
+** Font
+- Doom exposes five (optional) variables for controlling fonts in Doom. Here are the three important ones:
+  + `doom-font'
+  + `doom-variable-pitch-font'
+  + `doom-big-font' -- used for `doom-big-font-mode'; use this for presentations or streaming.
+
+- They all accept either a font-spec, font string ("Input Mono-12"), or xlfdfont string. You generally only need these two:
+#+begin_src emacs-lisp
+ ;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+ ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+#+end_src
+
+** theme
+ There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
+#+begin_src emacs-lisp
+(setq doom-theme 'doom-one)
+#+end_src
+** Org location
+- If you use `org' and don't want your org files in the default location below, change `org-directory'. It must be set before org loads!
+#+begin_src emacs-lisp
+(setq org-directory "~/Desktop/Org_mode/")
+#+end_src
+
+#+end_src
+** Line number style
+- This determines the style of line numbers in effect. If set to `nil', line numbers are disabled. For relative line numbers, set this to `relative'.
+#+begin_src emacs-lisp
+(setq display-line-numbers-type 'relative);; relative line numbers(like in vim)
+#+end_src
+** Additional info
+- Here are some additional functions/macros that could help you configure Doom:
+  + `load!' for loading external *.el files relative to this one
+  + `use-package!' for configuring packages
+  + `after!' for running code after a package has loaded
+  + `add-load-path!' for adding directories to the `load-path', relative to this file. Emacs searches the `load-path' when you load packages with `require' or `use-package'.
+  + `map!' for binding new keys
+- To get information about any of these functions/macros, move the cursor over the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+- This will open documentation for it, including demos of how they are used.
+- You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implement
+** my custom thingies
+*** Scrolling settings
+#+begin_src emacs-lisp
+(setq scroll-step 1);;scrolling settings
+(setq scroll-conservatively 10000)
+(setq auto-window-vscroll nil)
+(setq redisplay-dont-pause t
+  scroll-margin 1
+  scroll-step 1
+  scroll-conservatively 10000
+  scroll-preserve-screen-position 1)
+#+end_src
+*** Calendar settings
+#+begin_src emacs-lisp
+(setq european-calendar-style 't)
+(setq calendar-week-start-day 1);; weeks start on monday
+#+end_src
+*** Org TODO
+#+begin_src emacs-lisp
+(after! org
+  (setq org-todo-keywords
+        '((sequence "TODO(t)"
+                    "PROJ(p)"
+                    "LOOP(R)"
+                    "STRT(s)"
+                    "WAIT(w)"
+                    "LECTURE(l)"
+                    "ROUTINE(r)"
+                    "HOLD(h)"
+                    "IDEA(i)"
+                    "|"
+                    "DONE(d)"
+                    "KILL(k)")
+          (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+          (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
+  (setq org-todo-keyword-faces
+        '(("[-]" . +org-todo-active)
+          ("STRT" . +org-todo-active)
+          ("[?]" . +org-todo-onhold)
+          ("WAIT" . +org-todo-onhold)
+          ("HOLD" . +org-todo-onhold)
+          ("PROJ" . +org-todo-project)
+          ("LECTURE" . (:foreground "orange"))
+          ("ROUTINE" . (:foreground "violet"))
+          ("NO" . +org-todo-cancel)
+          ("KILL" . +org-todo-cancel)))
+  (require 'org-checklist)
+  (require 'org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (setq org-bullets-bullet-list '("◉" "○"))
+  )
+ #+end_src
+*** Mouse sidescroll
+#+begin_src emacs-lisp
+(global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
+(global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
+(setq mouse-wheel-tilt-scroll t)
+#+end_src
+*** LSP thingies
+#+begin_src emacs-lisp
+(setq lsp-modeline-code-actions-enable t)
+(setq lsp-ui-sideline-enable nil)
+(setq lsp-ui-sideline-show-hover nil)
+(setq company-idle-delay 0.1)
+(setq company-meghanada-prefix-length 3)
+#+end_src
+*** Android development
+#+begin_src emacs-lisp
+;; (require 'android-mode)
+(custom-set-variables
+ '(android-mode-avd "AVD")
+ '(android-mode-sdk-dir "/opt/android-sdk/"))
+ #+end_src
+*** custom commands
+**** Dolphin
+#+begin_src emacs-lisp
+(defun dolphin ()
+  "Opens dolphin in the current directory"
+  (interactive)
+  (call-process-shell-command "dolphin . &" nil 0))
+(global-set-key (kbd "<f3>") 'dolphin); Or whatever key you want...
+
+#+end_src
+**** Termite
+#+begin_src emacs-lisp
+(defun termite ()
+  "Opens termite in the current directory"
+  (interactive)
+  (call-process-shell-command "alacritty  &" nil 0))
+(global-set-key (kbd "<f1>") 'termite)
+
+#+end_src
+**** Line numbers(fix this later)
+#+begin_src emacs-lisp
+(defvar-local last-mode nil
+  "Buffer-local variable to store last mode in.")
+
+(defun toggle-linum-mode ()
+  "Toggle the mode between the current mode and `linum-mode'."
+  (interactive)
+  (make-local-variable 'last-mode)
+  (put 'last-mode 'permanent-local t)
+  (if (not 'linum-mode)
+      (progn
+        (message "switch back to %s" last-mode)
+        ;; (funcall last-mode)
+        (setq linum-mode 1))
+    ;; This means you are in the native mode you started in and now want to
+    ;; switch to org-mode
+    (message "switch to o from %s" last-mode)
+    ;; (setq last-mode nil)
+    (setq linum-mode 'nil)))
+(global-set-key (kbd "<f4>") 'toggle-linum-mode);; fix toggling
+#+end_src
+**** Find definition
+#+begin_src emacs-lisp
+(global-set-key [f12] 'xref-find-definitions)
+#+end_src
+#+RESULTS:
+: xref-find-definitions
+
+*** misc
+#+begin_src emacs-lisp
+(save-place-mode 1)
+(yas-global-mode 1)
+(setq fancy-splash-image "~/.config/doom/splash/default.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+(add-hook 'c-mode-hook #'rainbow-mode)
+(setq doc-view-continuous t);; scrolling in pdf file
+
+#+end_src
+*** Google calendar thingie
+#+begin_src emacs-lisp
+;; (setq package-check-signature nil)
+;; (use-package org-gcal
+;; :ensure t
+;; :config
+;; (setq org-gcal-client-id "866929913823-05tsfr469sf180ncvq0pgum5kju1nve3.apps.googleusercontent.com"
+;; org-gcal-client-secret "D4FEgO054YCjcpZ0n_WSz6zD"
+;; org-gcal-file-alist '(("pijus.petkevicius314@gmail.com" .  "~/Desktop/Org_mode/gcal.org"))))
+
+;; (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+
+#+end_src
+** Hlint for haskell
+#+begin_src emacs-lisp
+;; (require 'flymake-haskell-multi)
+;;   (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
+#+end_src
+
+** Omnisharp
+#+begin_src emacs-lisp
+  ;; (use-package omnisharp
+  ;;            :after company
+  ;;            :init
+  ;;            (add-to-list 'company-backends 'company-omnisharp)
+  ;;            (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
+  ;;            :config
+  ;;            (defun my-csharp-mode-setup ()
+  ;;              (omnisharp-mode)
+  ;;              (company-mode)
+  ;;              (flycheck-mode)
+  ;;              (setq indent-tabs-mode nil)
+  ;;              (setq c-syntactic-indentation t)
+  ;;              (c-set-style "ellemtel")
+  ;;              (setq c-basic-offset 4)
+  ;;              (setq truncate-lines t)
+  ;;              (setq tab-width 4)
+  ;;              (setq evil-shift-width 4)
+  ;;              ;;csharp-mode README.md recommends this too
+  ;;              ;;(electric-pair-mode 1)       ;; Emacs 24
+  ;;              ;;(electric-pair-local-mode 1) ;; Emacs 25
+  ;;              )
+  ;;            :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
+#+end_src
