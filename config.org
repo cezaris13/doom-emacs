@@ -210,6 +210,7 @@
 #+begin_src emacs-lisp
 ;; (require 'flymake-haskell-multi)
 ;;   (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
+
 #+end_src
 
 ** Omnisharp
