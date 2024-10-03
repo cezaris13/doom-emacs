@@ -205,12 +205,10 @@
 ;; (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
 ;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 #+end_src
-
 ** Hlint for haskell
 #+begin_src emacs-lisp
 ;; (require 'flymake-haskell-multi)
 ;;   (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
-
 #+end_src
 
 ** Omnisharp
