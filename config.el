@@ -5,6 +5,7 @@
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 (setq doom-theme 'doom-one)
+;;(setq doom-theme 'kanagawa-wave)
 
 (setq org-directory "~/Desktop/Org_mode/")
 
@@ -146,3 +147,10 @@
 ;;              ;;(electric-pair-local-mode 1) ;; Emacs 25
 ;;              )
 ;;            :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
+
+(custom-theme-set-faces! 'kanagawa-wave
+  '(line-number :foreground "dim gray")
+  '(line-number-current-line :foreground "white")
+  '(mode-line-inactive :background "dim gray" :foreground "white" :height 80)
+  '(mode-line :background "#16161D" :height 80)
+  '(default :background "#1F1F28"))
