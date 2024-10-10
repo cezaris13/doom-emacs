@@ -10,9 +10,7 @@
   - [[#line-number-style][Line number style]]
   - [[#additional-info][Additional info]]
   - [[#my-custom-thingies][my custom thingies]]
-  - [[#hlint-for-haskell][Hlint for haskell]]
   - [[#omnisharp][Omnisharp]]
-  - [[#line-number-theme][Line Number theme]]
 
 * Emacs config
  this is my custom doom emacs configuration(maybe someday i'll make my own)
@@ -39,8 +37,14 @@
 ** theme
  There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-one)
-;;(setq doom-theme 'kanagawa-wave)
+(setq doom-theme 'kanagawa-wave)
+(custom-theme-set-faces! 'kanagawa-wave
+  '(line-number :foreground "dim gray")
+  '(line-number-current-line :foreground "white")
+  '(mode-line-inactive :background "dim gray" :foreground "white" :height 80)
+  '(mode-line :background "#16161D" :height 80)
+  '(default :background "#1F1F28"))
+
 #+end_src
 ** Org location
 - If you use `org' and don't want your org files in the default location below, change `org-directory'. It must be set before org loads!
@@ -189,25 +193,14 @@
 #+begin_src emacs-lisp
 (save-place-mode 1)
 (yas-global-mode 1)
-(setq fancy-splash-image "~/.config/doom/splash/default.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+(setq fancy-splash-image "~/.config/doom/splash/kanagawa.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+
+;; fancy org bullets
 (add-hook 'c-mode-hook #'rainbow-mode)
 (setq doc-view-continuous t);; scrolling in pdf file
 
 #+end_src
-*** Google calendar thingie
-#+begin_src emacs-lisp
-;; (setq package-check-signature nil)
-;; (use-package org-gcal
-;; :ensure t
-;; :config
-;; (setq org-gcal-client-id "866929913823-05tsfr469sf180ncvq0pgum5kju1nve3.apps.googleusercontent.com"
-;; org-gcal-client-secret "D4FEgO054YCjcpZ0n_WSz6zD"
-;; org-gcal-file-alist '(("pijus.petkevicius314@gmail.com" .  "~/Desktop/Org_mode/gcal.org"))))
-
-;; (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
-;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
-#+end_src
-** Hlint for haskell
+*** Hlint for haskell
 #+begin_src emacs-lisp
 ;; (require 'flymake-haskell-multi)
 ;;   (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
@@ -238,15 +231,3 @@
   ;;              )
   ;;            :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
 #+end_src
-
-** Line Number theme
-#+begin_src emacs-lisp
-(custom-theme-set-faces! 'kanagawa-wave
-  '(line-number :foreground "dim gray")
-  '(line-number-current-line :foreground "white")
-  '(mode-line-inactive :background "dim gray" :foreground "white" :height 80)
-  '(mode-line :background "#16161D" :height 80)
-  '(default :background "#1F1F28"))
-  #+end_src
-#+RESULTS:
-| doom--customize-themes-h-62 |

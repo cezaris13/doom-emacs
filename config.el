@@ -4,8 +4,13 @@
 ;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-(setq doom-theme 'doom-one)
-;;(setq doom-theme 'kanagawa-wave)
+(setq doom-theme 'kanagawa-wave)
+(custom-theme-set-faces! 'kanagawa-wave
+  '(line-number :foreground "dim gray")
+  '(line-number-current-line :foreground "white")
+  '(mode-line-inactive :background "dim gray" :foreground "white" :height 80)
+  '(mode-line :background "#16161D" :height 80)
+  '(default :background "#1F1F28"))
 
 (setq org-directory "~/Desktop/Org_mode/")
 
@@ -107,20 +112,11 @@
 
 (save-place-mode 1)
 (yas-global-mode 1)
-(setq fancy-splash-image "~/.config/doom/splash/default.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+(setq fancy-splash-image "~/.config/doom/splash/kanagawa.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+
+;; fancy org bullets
 (add-hook 'c-mode-hook #'rainbow-mode)
 (setq doc-view-continuous t);; scrolling in pdf file
-
-;; (setq package-check-signature nil)
-;; (use-package org-gcal
-;; :ensure t
-;; :config
-;; (setq org-gcal-client-id "866929913823-05tsfr469sf180ncvq0pgum5kju1nve3.apps.googleusercontent.com"
-;; org-gcal-client-secret "D4FEgO054YCjcpZ0n_WSz6zD"
-;; org-gcal-file-alist '(("pijus.petkevicius314@gmail.com" .  "~/Desktop/Org_mode/gcal.org"))))
-
-;; (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
-;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 
 ;; (require 'flymake-haskell-multi)
 ;;   (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
@@ -147,10 +143,3 @@
 ;;              ;;(electric-pair-local-mode 1) ;; Emacs 25
 ;;              )
 ;;            :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
-
-(custom-theme-set-faces! 'kanagawa-wave
-  '(line-number :foreground "dim gray")
-  '(line-number-current-line :foreground "white")
-  '(mode-line-inactive :background "dim gray" :foreground "white" :height 80)
-  '(mode-line :background "#16161D" :height 80)
-  '(default :background "#1F1F28"))

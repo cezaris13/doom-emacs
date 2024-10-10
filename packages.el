@@ -48,3 +48,9 @@
 ;; (unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
+
+;; kanagawa themes
+(package! kanagawa-themes)
+
+;; fancy org bullets
+(package! org-bullets)
