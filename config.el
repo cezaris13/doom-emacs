@@ -1,8 +1,10 @@
 (setq user-full-name "Pijus Petkevičius"
       user-mail-address "pijus.petkevicius314@gmail.com")
 
-;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(setq doom-font (font-spec :family "Fira Code" :size 14 :weight 'light))
+
+ ;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+ ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 (setq doom-theme 'kanagawa-wave)
 (custom-theme-set-faces! 'kanagawa-wave
@@ -143,3 +145,62 @@
 ;;              ;;(electric-pair-local-mode 1) ;; Emacs 25
 ;;              )
 ;;            :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
+
+(plist-put! +ligatures-extra-symbols
+  ;; org
+  :name          "»"
+  :src_block     "»"
+  :src_block_end "«"
+  :quote         "“"
+  :quote_end     "”"
+  ;; Functional
+  :lambda        "λ"
+  :def           "ƒ"
+  :composition   "∘"
+  :map           "↦"
+  ;; Types
+  :null          "∅"
+  :true          "𝕋"
+  :false         "𝔽"
+  :int           "ℤ"
+  :float         "ℝ"
+  :str           "𝕊"
+  :bool          "𝔹"
+  :list          "𝕃"
+  ;; Flow
+  :not           "￢"
+  :in            "∈"
+  :not-in        "∉"
+  :and           "∧"
+  :or            "∨"
+  :for           "∀"
+  :some          "∃"
+  :return        "⟼"
+  :yield         "⟻"
+  ;; Other
+  :union         "⋃"
+  :intersect     "∩"
+  :diff          "∖"
+  :tuple         "⨂"
+  :pipe          "" ;; FIXME: find a non-private char
+  :dot           "•")  ;; you could also add your own if you want
+
+  (set-ligatures! 'kotlin-mode
+    :null "null"
+    :and  "&&"
+    :or  "||"
+    :not "!"
+ )
+(set-ligatures! 'c-mode
+  :null "NULL"
+  :and  "&&"
+  :or  "||"
+  :not "!"
+  )
+
+(set-ligatures! 'c++-mode
+  :null "NULL"
+  :and  "&&"
+  :or  "||"
+  :not "!"
+  )
