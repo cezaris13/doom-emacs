@@ -204,3 +204,10 @@
   :or  "||"
   :not "!"
   )
+
+(set-ligatures! 'java-mode
+  :null "null"
+  :and  "&&"
+  :or  "||"
+  :not "!"
+  )
