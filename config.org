@@ -275,28 +275,14 @@
   :pipe          "" ;; FIXME: find a non-private char
   :dot           "•")  ;; you could also add your own if you want
 
-  (set-ligatures! 'kotlin-mode
+  (set-ligatures! '(kotlin-mode java-mode)
     :null "null"
     :and  "&&"
     :or  "||"
     :not "!"
  )
-(set-ligatures! 'c-mode
+(set-ligatures! '(c-mode c++-mode)
   :null "NULL"
-  :and  "&&"
-  :or  "||"
-  :not "!"
-  )
-
-(set-ligatures! 'c++-mode
-  :null "NULL"
-  :and  "&&"
-  :or  "||"
-  :not "!"
-  )
-
-(set-ligatures! 'java-mode
-  :null "null"
   :and  "&&"
   :or  "||"
   :not "!"
