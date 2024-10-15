@@ -185,15 +185,33 @@
   :pipe          "" ;; FIXME: find a non-private char
   :dot           "•")  ;; you could also add your own if you want
 
-  (set-ligatures! '(kotlin-mode java-mode)
-    :null "null"
-    :and  "&&"
-    :or  "||"
-    :not "!"
- )
+(set-ligatures! '(kotlin-mode java-mode)
+  :null "null"
+  :and  "&&"
+  :or  "||"
+  :not "!"
+  )
 (set-ligatures! '(c-mode c++-mode)
   :null "NULL"
   :and  "&&"
   :or  "||"
   :not "!"
   )
+
+(setq lsp-inlay-hints-mode t)
+(setq lsp-inlay-hint-enable t)
+
+(dolist (key '("\C-f"))
+  (global-unset-key key))
+(defun find-references-under-cursor ()
+  "Find references of the word under the cursor using projectile-find-references"
+  (interactive)
+  (let ((word (thing-at-point 'word t)))  ; Get the word at point
+    (if word
+        (projectile-find-references word)
+      (projectile-find-references)
+      )
+    )
+  )
+
+  (global-set-key (kbd "C-f")  'find-references-under-cursor)
