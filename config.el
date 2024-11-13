@@ -241,3 +241,10 @@
   (lsp-face-highlight-textual ((t (:underline t :background nil :foreground nil))))
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
+
+;; (global-set-key (kbd "M-J") 'neotree-find-this-file)
+(use-package! neotree
+  :config
+  ;; Bind s-S-j to open NeoTree to the current file's location (command+shift+j)
+  (map! :desc "Open NeoTree at current file"
+        "s-J" #'+neotree/find-this-file))
