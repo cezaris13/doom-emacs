@@ -54,3 +54,7 @@
 
 ;; fancy org bullets
 (package! org-bullets)
+
+(package! logview)
+
+(package! rustic)

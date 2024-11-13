@@ -123,28 +123,28 @@
 ;; (require 'flymake-haskell-multi)
 ;;   (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
 
-;; (use-package omnisharp
-;;            :after company
-;;            :init
-;;            (add-to-list 'company-backends 'company-omnisharp)
-;;            (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
-;;            :config
-;;            (defun my-csharp-mode-setup ()
-;;              (omnisharp-mode)
-;;              (company-mode)
-;;              (flycheck-mode)
-;;              (setq indent-tabs-mode nil)
-;;              (setq c-syntactic-indentation t)
-;;              (c-set-style "ellemtel")
-;;              (setq c-basic-offset 4)
-;;              (setq truncate-lines t)
-;;              (setq tab-width 4)
-;;              (setq evil-shift-width 4)
-;;              ;;csharp-mode README.md recommends this too
-;;              ;;(electric-pair-mode 1)       ;; Emacs 24
-;;              ;;(electric-pair-local-mode 1) ;; Emacs 25
-;;              )
-;;            :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
+(use-package omnisharp
+           :after company
+           :init
+           (add-to-list 'company-backends 'company-omnisharp)
+           (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
+           :config
+           (defun my-csharp-mode-setup ()
+             (omnisharp-mode)
+             (company-mode)
+             (flycheck-mode)
+             (setq indent-tabs-mode nil)
+             (setq c-syntactic-indentation t)
+             (c-set-style "ellemtel")
+             (setq c-basic-offset 4)
+             (setq truncate-lines t)
+             (setq tab-width 4)
+             (setq evil-shift-width 4)
+             ;;csharp-mode README.md recommends this too
+             ;;(electric-pair-mode 1)       ;; Emacs 24
+             ;;(electric-pair-local-mode 1) ;; Emacs 25
+             )
+           :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
 
 (plist-put! +ligatures-extra-symbols
   ;; org
@@ -203,6 +203,7 @@
 
 (dolist (key '("\C-f"))
   (global-unset-key key))
+
 (defun find-references-under-cursor ()
   "Find references of the word under the cursor using projectile-find-references"
   (interactive)
@@ -215,3 +216,28 @@
   )
 
   (global-set-key (kbd "C-f")  'find-references-under-cursor)
+
+(use-package rustic
+  :config
+  (setq rustic-format-on-save t))
+
+(use-package lsp-mode
+  :commands lsp
+  :custom
+  (lsp-auto-guess-root t)
+  (lsp-keymap-prefix "M-m l")
+  (lsp-modeline-diagnostics-enable nil)
+  (lsp-keep-workspace-alive nil)
+  (lsp-auto-execute-action nil)
+  (lsp-before-save-edits nil)
+  (lsp-eldoc-enable-hover nil)
+  (lsp-diagnostic-package :none)
+  (lsp-completion-provider :none)
+  (lsp-file-watch-threshold 1500)
+  (lsp-enable-links)
+  :custom-face
+  (lsp-face-highlight-read ((t (:underline t :background nil :foreground nil))))
+  (lsp-face-highlight-write ((t (:underline t :background nil :foreground nil))))
+  (lsp-face-highlight-textual ((t (:underline t :background nil :foreground nil))))
+  :hook
+  (lsp-mode . lsp-enable-which-key-integration))
