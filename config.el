@@ -215,7 +215,7 @@
     )
   )
 
-  (global-set-key (kbd "C-f")  'find-references-under-cursor)
+  (global-set-key (kbd "<f9>") 'find-references-under-cursor)
 
 (use-package rustic
   :config
