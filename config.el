@@ -193,6 +193,7 @@
 (map! :desc "Comment code in the file"
       "C-/" 'comment-line)
 
+;; TODO
 (defun iwb ()
   "indent whole buffer"
   (interactive)
@@ -213,7 +214,7 @@
 ;; (add-hook 'git-messenger:before-popup-hook
 ;;           (lambda (message)
 ;;             (setq-local popup-tip-face 'popup-tip-face-1)))
-
+;; TODO
 (setq! git-messenger:use-magit-popup t)
 (map! :desc "Show git blame under the cursor"
       "s-B" 'git-messenger:popup-message)

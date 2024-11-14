@@ -313,16 +313,17 @@
 #+RESULTS:
 *** Format whole buffer
 #+begin_src emacs-lisp :tangle yes
+;; TODO
 (defun iwb ()
   "indent whole buffer"
   (interactive)
   (delete-trailing-whitespace)
   (indent-region (point-min) (point-max) nil))
-
 #+end_src
 
 #+RESULTS:
 : iwb
+
 *** Blame of one line
 #+begin_src emacs-lisp :tangle yes
 ;; (defface popup-tip-face-1
@@ -339,14 +340,13 @@
 ;; (add-hook 'git-messenger:before-popup-hook
 ;;           (lambda (message)
 ;;             (setq-local popup-tip-face 'popup-tip-face-1)))
-
+;; TODO
 (setq! git-messenger:use-magit-popup t)
 (map! :desc "Show git blame under the cursor"
       "s-B" 'git-messenger:popup-message)
 #+end_src
 
 #+RESULTS:
-
 
 ** Org mode
 *** Calendar settings
