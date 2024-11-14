@@ -89,6 +89,7 @@
 
 #+RESULTS:
 : t
+
 *** Scrolling settings
 #+begin_src emacs-lisp :tangle yes
 (setq scroll-step 1)
@@ -297,6 +298,7 @@
 #+end_src
 
 #+RESULTS:
+
 *** Open file vertically
 #+begin_src emacs-lisp :tangle yes
 (map! :desc "Split window vertically"
@@ -304,6 +306,7 @@
 #+end_src
 
 #+RESULTS:
+
 *** Comment code
 #+begin_src emacs-lisp :tangle yes
 (map! :desc "Comment code in the file"
@@ -312,13 +315,13 @@
 
 #+RESULTS:
 
-
 ** Org mode
 *** Calendar settings
 #+begin_src emacs-lisp :tangle yes
 (setq european-calendar-style 't)
 (setq calendar-week-start-day 1);; weeks start on monday
 #+end_src
+
 *** TODO modes
 #+begin_src emacs-lisp :tangle yes
 (after! org
@@ -360,6 +363,7 @@
  #+end_src
  #+RESULTS:
  | ◉ | ○ |
+
 ** Misc
 #+begin_src emacs-lisp :tangle yes
 (save-place-mode 1)
@@ -374,6 +378,7 @@
 
 #+RESULTS:
 : t
+
 ** Additional info
 - Here are some additional functions/macros that could help you configure Doom:
   + `load!' for loading external *.el files relative to this one
