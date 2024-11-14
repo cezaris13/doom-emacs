@@ -1,7 +1,9 @@
 (setq user-full-name "Pijus Petkevičius"
       user-mail-address "pijus.petkevicius314@gmail.com")
 
-(setq doom-font (font-spec :family "Fira Code" :size 14 :weight 'light))
+(setq doom-font (font-spec :family "Fira Code" :size 14 :weight 'light)
+      doom-symbol-font (font-spec :family "Symbola" :size 22 :weight 'Regular))
+
 
  ;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
  ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
@@ -215,7 +217,8 @@
     )
   )
 
-  (global-set-key (kbd "<f9>") 'find-references-under-cursor)
+  (map! :desc "Find references of the word under cursor in the project"
+        "s-F" 'find-references-under-cursor))
 
 (use-package rustic
   :config
