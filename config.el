@@ -203,9 +203,6 @@
 (setq lsp-inlay-hints-mode t)
 (setq lsp-inlay-hint-enable t)
 
-(dolist (key '("\C-f"))
-  (global-unset-key key))
-
 (defun find-references-under-cursor ()
   "Find references of the word under the cursor using projectile-find-references"
   (interactive)
@@ -245,9 +242,14 @@
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
 
-;; (global-set-key (kbd "M-J") 'neotree-find-this-file)
 (use-package! neotree
   :config
   ;; Bind s-S-j to open NeoTree to the current file's location (command+shift+j)
   (map! :desc "Open NeoTree at current file"
         "s-J" #'+neotree/find-this-file))
+
+(use-package! neotree
+  :config
+  ;; Bind s-S-o to find file in project using projectile (command+shift+o)
+  (map! :desc "Open Find file in the project"
+        "s-O" #'projectile-find-file))
