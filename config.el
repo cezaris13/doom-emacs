@@ -230,6 +230,7 @@
 (save-place-mode 1)
 (yas-global-mode 1)
 
-;; fancy org bullets
+ ;; rainbow mode for braces
 (add-hook 'c-mode-hook #'rainbow-mode)
-(setq doc-view-continuous t);; scrolling in pdf file
+;; scrolling in pdf file
+(setq doc-view-continuous t)
