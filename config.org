@@ -297,6 +297,21 @@
 #+end_src
 
 #+RESULTS:
+*** Open file vertically
+#+begin_src emacs-lisp
+(map! :desc "Split window vertically"
+      "C-\\" 'evil-window-vsplit)
+#+end_src
+
+#+RESULTS:
+*** Comment code
+#+begin_src emacs-lisp
+(map! :desc "Comment code in the file"
+      "C-/" 'comment-line)
+#+end_src
+
+#+RESULTS:
+
 
 ** Org mode
 *** Calendar settings

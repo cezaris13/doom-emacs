@@ -190,6 +190,12 @@
 (map! :desc "Find definition under cursor"
       "s-<mouse-1>" 'xref-find-definitions)
 
+(map! :desc "Split window vertically"
+      "C-\\" 'evil-window-vsplit)
+
+(map! :desc "Comment code in the file"
+      "C-/" 'comment-line)
+
 (setq european-calendar-style 't)
 (setq calendar-week-start-day 1);; weeks start on monday
 
