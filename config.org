@@ -224,7 +224,7 @@
 #+end_src
 
 ** Keybindings
-*** Dolphin
+*** Open external file explorer
 #+begin_src emacs-lisp
 (defun open-external-file-explorer ()
   "Opens file explorer in the current directory"
@@ -233,7 +233,7 @@
 (global-set-key (kbd "<f3>") 'open-external-file-explorer)
 #+end_src
 
-*** Termite
+*** Open external terminal
 #+begin_src emacs-lisp
 (defun open-external-terminal ()
   "Opens external terminal in the current directory"
