@@ -10,8 +10,13 @@
   - [[#line-number-style][Line number style]]
   - [[#additional-info][Additional info]]
   - [[#my-custom-thingies][my custom thingies]]
-  - [[#hlint-for-haskell][Hlint for haskell]]
   - [[#omnisharp][Omnisharp]]
+- [[#ligatures][Ligatures]]
+- [[#lsp-inlay-hints][LSP inlay hints]]
+- [[#custom-find-references-in-project][Custom find references in project]]
+- [[#rust][Rust]]
+  - [[#neotree][Neotree]]
+  - [[#find-file][Find file]]
 
 * Emacs config
  this is my custom doom emacs configuration(maybe someday i'll make my own)
@@ -30,15 +35,29 @@
   + `doom-big-font' -- used for `doom-big-font-mode'; use this for presentations or streaming.
 
 - They all accept either a font-spec, font string ("Input Mono-12"), or xlfdfont string. You generally only need these two:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
+(setq doom-font (font-spec :family "Fira Code" :size 14 :weight 'light)
+      doom-symbol-font (font-spec :family "Symbola" :size 22 :weight 'Regular))
+
+
  ;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
  ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 #+end_src
 
+#+RESULTS:
+: #<font-spec nil nil Symbola nil nil regular nil nil 22 nil nil nil nil>
+
 ** theme
  There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-one)
+(setq doom-theme 'kanagawa-wave)
+(custom-theme-set-faces! 'kanagawa-wave
+  '(line-number :foreground "dim gray")
+  '(line-number-current-line :foreground "white")
+  '(mode-line-inactive :background "dim gray" :foreground "white" :height 80)
+  '(mode-line :background "#16161D" :height 80)
+  '(default :background "#1F1F28"))
+
 #+end_src
 ** Org location
 - If you use `org' and don't want your org files in the default location below, change `org-directory'. It must be set before org loads!
@@ -150,7 +169,7 @@
 (defun termite ()
   "Opens termite in the current directory"
   (interactive)
-  (call-process-shell-command "termite &" nil 0))
+  (call-process-shell-command "alacritty  &" nil 0))
 (global-set-key (kbd "<f1>") 'termite)
 
 #+end_src
@@ -187,29 +206,17 @@
 #+begin_src emacs-lisp
 (save-place-mode 1)
 (yas-global-mode 1)
-(setq fancy-splash-image "~/.doom.d/splash/default.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+(setq fancy-splash-image "~/.config/doom/splash/kanagawa.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+
+;; fancy org bullets
 (add-hook 'c-mode-hook #'rainbow-mode)
 (setq doc-view-continuous t);; scrolling in pdf file
 
 #+end_src
-*** Google calendar thingie
+*** Hlint for haskell
 #+begin_src emacs-lisp
-;; (setq package-check-signature nil)
-;; (use-package org-gcal
-;; :ensure t
-;; :config
-;; (setq org-gcal-client-id "866929913823-05tsfr469sf180ncvq0pgum5kju1nve3.apps.googleusercontent.com"
-;; org-gcal-client-secret "D4FEgO054YCjcpZ0n_WSz6zD"
-;; org-gcal-file-alist '(("pijus.petkevicius314@gmail.com" .  "~/Desktop/Org_mode/gcal.org"))))
-
-;; (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
-;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
-
-#+end_src
-** Hlint for haskell
-#+begin_src emacs-lisp
-(require 'flymake-haskell-multi)
-  (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
+;; (require 'flymake-haskell-multi)
+;;   (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
 #+end_src
 
 ** Omnisharp
@@ -237,3 +244,137 @@
                )
              :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
 #+end_src
+* Ligatures
+ #+begin_src emacs-lisp :tangle yes
+(plist-put! +ligatures-extra-symbols
+  ;; org
+  :name          "»"
+  :src_block     "»"
+  :src_block_end "«"
+  :quote         "“"
+  :quote_end     "”"
+  ;; Functional
+  :lambda        "λ"
+  :def           "ƒ"
+  :composition   "∘"
+  :map           "↦"
+  ;; Types
+  :null          "∅"
+  :true          "𝕋"
+  :false         "𝔽"
+  :int           "ℤ"
+  :float         "ℝ"
+  :str           "𝕊"
+  :bool          "𝔹"
+  :list          "𝕃"
+  ;; Flow
+  :not           "￢"
+  :in            "∈"
+  :not-in        "∉"
+  :and           "∧"
+  :or            "∨"
+  :for           "∀"
+  :some          "∃"
+  :return        "⟼"
+  :yield         "⟻"
+  ;; Other
+  :union         "⋃"
+  :intersect     "∩"
+  :diff          "∖"
+  :tuple         "⨂"
+  :pipe          "" ;; FIXME: find a non-private char
+  :dot           "•")  ;; you could also add your own if you want
+
+(set-ligatures! '(kotlin-mode java-mode)
+  :null "null"
+  :and  "&&"
+  :or  "||"
+  :not "!"
+  )
+(set-ligatures! '(c-mode c++-mode)
+  :null "NULL"
+  :and  "&&"
+  :or  "||"
+  :not "!"
+  )
+#+end_src
+* LSP inlay hints
+#+begin_src emacs-lisp :tangle yes
+(setq lsp-inlay-hints-mode t)
+(setq lsp-inlay-hint-enable t)
+#+end_src
+
+#+RESULTS:
+: t
+
+
+* Custom find references in project
+#+begin_src emacs-lisp :tangle yes
+(defun find-references-under-cursor ()
+  "Find references of the word under the cursor using projectile-find-references"
+  (interactive)
+  (let ((word (thing-at-point 'word t)))  ; Get the word at point
+    (if word
+        (projectile-find-references word)
+      (projectile-find-references)
+      )
+    )
+  )
+
+  (map! :desc "Find references of the word under cursor in the project"
+        "s-F" 'find-references-under-cursor))
+#+end_src
+
+#+RESULTS:
+
+* Rust
+#+begin_src emacs-lisp :tangle yes
+(use-package rustic
+  :config
+  (setq rustic-format-on-save t))
+
+(use-package lsp-mode
+  :commands lsp
+  :custom
+  (lsp-auto-guess-root t)
+  (lsp-keymap-prefix "M-m l")
+  (lsp-modeline-diagnostics-enable nil)
+  (lsp-keep-workspace-alive nil)
+  (lsp-auto-execute-action nil)
+  (lsp-before-save-edits nil)
+  (lsp-eldoc-enable-hover nil)
+  (lsp-diagnostic-package :none)
+  (lsp-completion-provider :none)
+  (lsp-file-watch-threshold 1500)
+  (lsp-enable-links)
+  :custom-face
+  (lsp-face-highlight-read ((t (:underline t :background nil :foreground nil))))
+  (lsp-face-highlight-write ((t (:underline t :background nil :foreground nil))))
+  (lsp-face-highlight-textual ((t (:underline t :background nil :foreground nil))))
+  :hook
+  (lsp-mode . lsp-enable-which-key-integration))
+#+end_src
+
+** Neotree
+*** Find current file in directory
+#+begin_src emacs-lisp :tangle yes
+(use-package! neotree
+  :config
+  ;; Bind s-S-j to open NeoTree to the current file's location (command+shift+j)
+  (map! :desc "Open NeoTree at current file"
+        "s-J" #'+neotree/find-this-file))
+#+end_src
+
+#+RESULTS:
+: t
+** Find file
+#+begin_src emacs-lisp :tangle yes
+(use-package! neotree
+  :config
+  ;; Bind s-S-o to find file in project using projectile (command+shift+o)
+  (map! :desc "Open Find file in the project"
+        "s-O" #'projectile-find-file))
+#+end_src
+
+#+RESULTS:
+: t
