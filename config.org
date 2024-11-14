@@ -19,7 +19,7 @@
 ** User data
 - Place your private configuration here! Remember, you do not need to run 'doom sync' after modifying this file!
 - Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (setq user-full-name "Pijus Petkevičius"
       user-mail-address "pijus.petkevicius314@gmail.com")
 #+end_src
@@ -44,7 +44,7 @@
 
 ** Theme
  There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (setq doom-theme 'kanagawa-wave)
 (custom-theme-set-faces! 'kanagawa-wave
   '(line-number :foreground "dim gray")
@@ -63,20 +63,20 @@
 
 ** Org location
 - If you use `org' and don't want your org files in the default location below, change `org-directory'. It must be set before org loads!
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (setq org-directory "~/Desktop/Org_mode/")
 #+end_src
 
 #+end_src
 ** Line number style
 - This determines the style of line numbers in effect. If set to `nil', line numbers are disabled. For relative line numbers, set this to `relative'.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (setq display-line-numbers-type 'relative);; relative line numbers(like in vim)
 #+end_src
 
 ** Scrolling
 *** Mouse sidescroll
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
 (global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
 
@@ -90,7 +90,7 @@
 #+RESULTS:
 : t
 *** Scrolling settings
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (setq scroll-step 1)
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
@@ -201,7 +201,7 @@
 #+end_src
 
 *** C#
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package omnisharp
              :after company
              :init
@@ -225,7 +225,7 @@
 
 ** Keybindings
 *** Open external file explorer
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (defun open-external-file-explorer ()
   "Opens file explorer in the current directory"
   (interactive)
@@ -234,7 +234,7 @@
 #+end_src
 
 *** Open external terminal
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (defun open-external-terminal ()
   "Opens external terminal in the current directory"
   (interactive)
@@ -289,7 +289,7 @@
 #+RESULTS:
 
 *** Find definition under cursor
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (global-set-key [f12] 'xref-find-definitions)
 
 (map! :desc "Find definition under cursor"
@@ -298,14 +298,14 @@
 
 #+RESULTS:
 *** Open file vertically
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (map! :desc "Split window vertically"
       "C-\\" 'evil-window-vsplit)
 #+end_src
 
 #+RESULTS:
 *** Comment code
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 (map! :desc "Comment code in the file"
       "C-/" 'comment-line)
 #+end_src
