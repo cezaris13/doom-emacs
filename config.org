@@ -1,27 +1,22 @@
 #+TITLE: Emacs config
 #+PROPERTY: header-args :tangle config.el
 * Table of contents :TOC:
-- [[#emacs-config][Emacs config]]
-- [[#configuration][configuration]]
-  - [[#user-data][user data]]
+- [[#configuration][Configuration]]
+  - [[#user-data][User data]]
   - [[#font][Font]]
-  - [[#theme][theme]]
+  - [[#theme][Theme]]
   - [[#org-location][Org location]]
   - [[#line-number-style][Line number style]]
+  - [[#scrolling][Scrolling]]
+  - [[#ligatures][Ligatures]]
+  - [[#languages-setup][Languages setup]]
+  - [[#keybindings][Keybindings]]
+  - [[#org-mode][Org mode]]
+  - [[#misc][Misc]]
   - [[#additional-info][Additional info]]
-  - [[#my-custom-thingies][my custom thingies]]
-  - [[#omnisharp][Omnisharp]]
-- [[#ligatures][Ligatures]]
-- [[#lsp-inlay-hints][LSP inlay hints]]
-- [[#custom-find-references-in-project][Custom find references in project]]
-- [[#rust][Rust]]
-  - [[#neotree][Neotree]]
-  - [[#find-file][Find file]]
 
-* Emacs config
- this is my custom doom emacs configuration(maybe someday i'll make my own)
-* configuration
-** user data
+* Configuration
+** User data
 - Place your private configuration here! Remember, you do not need to run 'doom sync' after modifying this file!
 - Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets.
 #+begin_src emacs-lisp
@@ -47,7 +42,7 @@
 #+RESULTS:
 : #<font-spec nil nil Symbola nil nil regular nil nil 22 nil nil nil nil>
 
-** theme
+** Theme
  There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
 #+begin_src emacs-lisp
 (setq doom-theme 'kanagawa-wave)
@@ -58,7 +53,14 @@
   '(mode-line :background "#16161D" :height 80)
   '(default :background "#1F1F28"))
 
+;; add custom image to emacs home screen
+(setq fancy-splash-image "~/.config/doom/splash/kanagawa.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+
 #+end_src
+
+#+RESULTS:
+: ~/.config/doom/splash/kanagawa.png
+
 ** Org location
 - If you use `org' and don't want your org files in the default location below, change `org-directory'. It must be set before org loads!
 #+begin_src emacs-lisp
@@ -71,20 +73,25 @@
 #+begin_src emacs-lisp
 (setq display-line-numbers-type 'relative);; relative line numbers(like in vim)
 #+end_src
-** Additional info
-- Here are some additional functions/macros that could help you configure Doom:
-  + `load!' for loading external *.el files relative to this one
-  + `use-package!' for configuring packages
-  + `after!' for running code after a package has loaded
-  + `add-load-path!' for adding directories to the `load-path', relative to this file. Emacs searches the `load-path' when you load packages with `require' or `use-package'.
-  + `map!' for binding new keys
-- To get information about any of these functions/macros, move the cursor over the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-- This will open documentation for it, including demos of how they are used.
-- You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implement
-** my custom thingies
+
+** Scrolling
+*** Mouse sidescroll
+#+begin_src emacs-lisp
+(global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
+(global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
+
+;; for MX master 3 mouse
+(global-set-key (kbd "<wheel-right>") (lambda () (interactive) (scroll-left 6)))
+(global-set-key (kbd "<wheel-left>") (lambda () (interactive) (scroll-right 6)))
+
+(setq mouse-wheel-tilt-scroll t)
+#+end_src
+
+#+RESULTS:
+: t
 *** Scrolling settings
 #+begin_src emacs-lisp
-(setq scroll-step 1);;scrolling settings
+(setq scroll-step 1)
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
 (setq redisplay-dont-pause t
@@ -93,158 +100,8 @@
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
 #+end_src
-*** Calendar settings
-#+begin_src emacs-lisp
-(setq european-calendar-style 't)
-(setq calendar-week-start-day 1);; weeks start on monday
-#+end_src
-*** Org TODO
-#+begin_src emacs-lisp
-(after! org
-  (setq org-todo-keywords
-        '((sequence "TODO(t)"
-                    "PROJ(p)"
-                    "LOOP(R)"
-                    "STRT(s)"
-                    "WAIT(w)"
-                    "LECTURE(l)"
-                    "ROUTINE(r)"
-                    "HOLD(h)"
-                    "IDEA(i)"
-                    "|"
-                    "DONE(d)"
-                    "KILL(k)")
-          (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
-          (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
-  (setq org-todo-keyword-faces
-        '(("[-]" . +org-todo-active)
-          ("STRT" . +org-todo-active)
-          ("[?]" . +org-todo-onhold)
-          ("WAIT" . +org-todo-onhold)
-          ("HOLD" . +org-todo-onhold)
-          ("PROJ" . +org-todo-project)
-          ("LECTURE" . (:foreground "orange"))
-          ("ROUTINE" . (:foreground "violet"))
-          ("NO" . +org-todo-cancel)
-          ("KILL" . +org-todo-cancel)))
-  (require 'org-checklist)
-  (require 'org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (setq org-bullets-bullet-list '("◉" "○"))
-  )
- #+end_src
-*** Mouse sidescroll
-#+begin_src emacs-lisp
-(global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
-(global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
-(setq mouse-wheel-tilt-scroll t)
-#+end_src
-*** LSP thingies
-#+begin_src emacs-lisp
-(setq lsp-modeline-code-actions-enable t)
-(setq lsp-ui-sideline-enable nil)
-(setq lsp-ui-sideline-show-hover nil)
-(setq company-idle-delay 0.1)
-(setq company-meghanada-prefix-length 3)
-#+end_src
-*** Android development
-#+begin_src emacs-lisp
-;; (require 'android-mode)
-(custom-set-variables
- '(android-mode-avd "AVD")
- '(android-mode-sdk-dir "/opt/android-sdk/"))
- #+end_src
-*** custom commands
-**** Dolphin
-#+begin_src emacs-lisp
-(defun dolphin ()
-  "Opens dolphin in the current directory"
-  (interactive)
-  (call-process-shell-command "dolphin . &" nil 0))
-(global-set-key (kbd "<f3>") 'dolphin); Or whatever key you want...
 
-#+end_src
-**** Termite
-#+begin_src emacs-lisp
-(defun termite ()
-  "Opens termite in the current directory"
-  (interactive)
-  (call-process-shell-command "alacritty  &" nil 0))
-(global-set-key (kbd "<f1>") 'termite)
-
-#+end_src
-**** Line numbers(fix this later)
-#+begin_src emacs-lisp
-(defvar-local last-mode nil
-  "Buffer-local variable to store last mode in.")
-
-(defun toggle-linum-mode ()
-  "Toggle the mode between the current mode and `linum-mode'."
-  (interactive)
-  (make-local-variable 'last-mode)
-  (put 'last-mode 'permanent-local t)
-  (if (not 'linum-mode)
-      (progn
-        (message "switch back to %s" last-mode)
-        ;; (funcall last-mode)
-        (setq linum-mode 1))
-    ;; This means you are in the native mode you started in and now want to
-    ;; switch to org-mode
-    (message "switch to o from %s" last-mode)
-    ;; (setq last-mode nil)
-    (setq linum-mode 'nil)))
-(global-set-key (kbd "<f4>") 'toggle-linum-mode);; fix toggling
-#+end_src
-**** Find definition
-#+begin_src emacs-lisp
-(global-set-key [f12] 'xref-find-definitions)
-#+end_src
-#+RESULTS:
-: xref-find-definitions
-
-*** misc
-#+begin_src emacs-lisp
-(save-place-mode 1)
-(yas-global-mode 1)
-(setq fancy-splash-image "~/.config/doom/splash/kanagawa.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
-
-;; fancy org bullets
-(add-hook 'c-mode-hook #'rainbow-mode)
-(setq doc-view-continuous t);; scrolling in pdf file
-
-#+end_src
-*** Hlint for haskell
-#+begin_src emacs-lisp
-;; (require 'flymake-haskell-multi)
-;;   (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
-#+end_src
-
-** Omnisharp
-#+begin_src emacs-lisp
-  (use-package omnisharp
-             :after company
-             :init
-             (add-to-list 'company-backends 'company-omnisharp)
-             (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
-             :config
-             (defun my-csharp-mode-setup ()
-               (omnisharp-mode)
-               (company-mode)
-               (flycheck-mode)
-               (setq indent-tabs-mode nil)
-               (setq c-syntactic-indentation t)
-               (c-set-style "ellemtel")
-               (setq c-basic-offset 4)
-               (setq truncate-lines t)
-               (setq tab-width 4)
-               (setq evil-shift-width 4)
-               ;;csharp-mode README.md recommends this too
-               ;;(electric-pair-mode 1)       ;; Emacs 24
-               ;;(electric-pair-local-mode 1) ;; Emacs 25
-               )
-             :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
-#+end_src
-* Ligatures
+** Ligatures
  #+begin_src emacs-lisp :tangle yes
 (plist-put! +ligatures-extra-symbols
   ;; org
@@ -298,36 +155,24 @@
   :not "!"
   )
 #+end_src
-* LSP inlay hints
+
+** Languages setup
+*** General LSP
 #+begin_src emacs-lisp :tangle yes
 (setq lsp-inlay-hints-mode t)
 (setq lsp-inlay-hint-enable t)
+
+(setq lsp-modeline-code-actions-enable t)
+(setq lsp-ui-sideline-enable nil)
+(setq lsp-ui-sideline-show-hover nil)
+(setq company-idle-delay 0.1)
+(setq company-meghanada-prefix-length 3)
 #+end_src
 
 #+RESULTS:
 : t
 
-
-* Custom find references in project
-#+begin_src emacs-lisp :tangle yes
-(defun find-references-under-cursor ()
-  "Find references of the word under the cursor using projectile-find-references"
-  (interactive)
-  (let ((word (thing-at-point 'word t)))  ; Get the word at point
-    (if word
-        (projectile-find-references word)
-      (projectile-find-references)
-      )
-    )
-  )
-
-  (map! :desc "Find references of the word under cursor in the project"
-        "s-F" 'find-references-under-cursor))
-#+end_src
-
-#+RESULTS:
-
-* Rust
+*** Rust
 #+begin_src emacs-lisp :tangle yes
 (use-package rustic
   :config
@@ -355,7 +200,63 @@
   (lsp-mode . lsp-enable-which-key-integration))
 #+end_src
 
-** Neotree
+*** C#
+#+begin_src emacs-lisp
+  (use-package omnisharp
+             :after company
+             :init
+             (add-to-list 'company-backends 'company-omnisharp)
+             (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
+             :config
+             (defun my-csharp-mode-setup ()
+               (omnisharp-mode)
+               (company-mode)
+               (flycheck-mode)
+               (setq indent-tabs-mode nil)
+               (setq c-syntactic-indentation t)
+               (c-set-style "ellemtel")
+               (setq c-basic-offset 4)
+               (setq truncate-lines t)
+               (setq tab-width 4)
+               (setq evil-shift-width 4)
+               )
+             :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
+#+end_src
+
+** Keybindings
+*** Dolphin
+#+begin_src emacs-lisp
+(defun open-external-file-explorer ()
+  "Opens file explorer in the current directory"
+  (interactive)
+  (call-process-shell-command "dolphin . &" nil 0))
+(global-set-key (kbd "<f3>") 'open-external-file-explorer)
+#+end_src
+
+*** Termite
+#+begin_src emacs-lisp
+(defun open-external-terminal ()
+  "Opens external terminal in the current directory"
+  (interactive)
+  (call-process-shell-command "alacritty  &" nil 0))
+(global-set-key (kbd "<f1>") 'open-external-terminal)
+#+end_src
+
+#+RESULTS:
+: open-external-terminal
+
+*** Find file
+#+begin_src emacs-lisp :tangle yes
+(use-package! projectile
+  :config
+  ;; Bind s-S-o to find file in project using projectile (command+shift+o)
+  (map! :desc "Open Find file in the project"
+        "s-O" #'projectile-find-file))
+#+end_src
+
+#+RESULTS:
+: t
+
 *** Find current file in directory
 #+begin_src emacs-lisp :tangle yes
 (use-package! neotree
@@ -367,14 +268,103 @@
 
 #+RESULTS:
 : t
-** Find file
+
+*** Find references in project
 #+begin_src emacs-lisp :tangle yes
-(use-package! neotree
-  :config
-  ;; Bind s-S-o to find file in project using projectile (command+shift+o)
-  (map! :desc "Open Find file in the project"
-        "s-O" #'projectile-find-file))
+(defun find-references-under-cursor ()
+  "Find references of the word under the cursor using projectile-find-references"
+  (interactive)
+  (let ((word (thing-at-point 'word t)))  ; Get the word at point
+    (if word
+        (projectile-find-references word)
+      (projectile-find-references)
+      )
+    )
+  )
+
+(map! :desc "Find references of the word under cursor in the project"
+        "s-F" 'find-references-under-cursor)
+#+end_src
+
+#+RESULTS:
+
+*** Find definition under cursor
+#+begin_src emacs-lisp
+(global-set-key [f12] 'xref-find-definitions)
+
+(map! :desc "Find definition under cursor"
+      "s-<mouse-1>" 'xref-find-definitions)
+#+end_src
+
+#+RESULTS:
+
+** Org mode
+*** Calendar settings
+#+begin_src emacs-lisp :tangle yes
+(setq european-calendar-style 't)
+(setq calendar-week-start-day 1);; weeks start on monday
+#+end_src
+*** TODO modes
+#+begin_src emacs-lisp :tangle yes
+(after! org
+  (setq org-todo-keywords
+        '((sequence "TODO(t)"
+                    "PROJ(p)"
+                    "LOOP(R)"
+                    "STRT(s)"
+                    "WAIT(w)"
+                    "LECTURE(l)"
+                    "ROUTINE(r)"
+                    "HOLD(h)"
+                    "IDEA(i)"
+                    "|"
+                    "DONE(d)"
+                    "KILL(k)")
+          (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+          (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
+  (setq org-todo-keyword-faces
+        '(("[-]" . +org-todo-active)
+          ("STRT" . +org-todo-active)
+          ("[?]" . +org-todo-onhold)
+          ("WAIT" . +org-todo-onhold)
+          ("HOLD" . +org-todo-onhold)
+          ("PROJ" . +org-todo-project)
+          ("LECTURE" . (:foreground "orange"))
+          ("ROUTINE" . (:foreground "violet"))
+          ("NO" . +org-todo-cancel)
+          ("KILL" . +org-todo-cancel)))
+)
+ #+end_src
+
+*** Org bullets
+ #+begin_src emacs-lisp :tangle yes
+  (require 'org-checklist)
+  (require 'org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (setq org-bullets-bullet-list '("◉" "○"))
+ #+end_src
+ #+RESULTS:
+ | ◉ | ○ |
+** Misc
+#+begin_src emacs-lisp
+(save-place-mode 1)
+(yas-global-mode 1)
+
+;; fancy org bullets
+(add-hook 'c-mode-hook #'rainbow-mode)
+(setq doc-view-continuous t);; scrolling in pdf file
+
 #+end_src
 
 #+RESULTS:
 : t
+** Additional info
+- Here are some additional functions/macros that could help you configure Doom:
+  + `load!' for loading external *.el files relative to this one
+  + `use-package!' for configuring packages
+  + `after!' for running code after a package has loaded
+  + `add-load-path!' for adding directories to the `load-path', relative to this file. Emacs searches the `load-path' when you load packages with `require' or `use-package'.
+  + `map!' for binding new keys
+- To get information about any of these functions/macros, move the cursor over the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+- This will open documentation for it, including demos of how they are used.
+- You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implement
