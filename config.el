@@ -14,7 +14,9 @@
   '(line-number-current-line :foreground "white")
   '(mode-line-inactive :background "dim gray" :foreground "white" :height 80)
   '(mode-line :background "#16161D" :height 80)
-  '(default :background "#1F1F28"))
+  '(default :background "#1F1F28")
+  '(diff-hl-change :foreground "#A86E51")
+  )
 
 ;; add custom image to emacs home screen
 (setq fancy-splash-image "~/.config/doom/splash/kanagawa.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
@@ -35,11 +37,6 @@
 (setq scroll-step 1)
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
-(setq redisplay-dont-pause t
-  scroll-margin 1
-  scroll-step 1
-  scroll-conservatively 10000
-  scroll-preserve-screen-position 1)
 
 (plist-put! +ligatures-extra-symbols
   ;; org
@@ -195,6 +192,31 @@
 
 (map! :desc "Comment code in the file"
       "C-/" 'comment-line)
+
+(defun iwb ()
+  "indent whole buffer"
+  (interactive)
+  (delete-trailing-whitespace)
+  (indent-region (point-min) (point-max) nil))
+
+;; (defface popup-tip-face-1
+;;   '((t (:background "red" :foreground "black")))
+;;   "Face for popup tip."
+;;   :group 'popup)
+
+;; ;; (setq! popup-tip-face popup-tip-face1)
+
+;; ;; (add-hook 'git-messenger:before-popup-hook
+;; ;;           (lambda ()
+;; ;;             (setq-local popup-face 'git-messenger-popup-face)))
+;; ;; Use `before-popup-hook` to customize popup style
+;; (add-hook 'git-messenger:before-popup-hook
+;;           (lambda (message)
+;;             (setq-local popup-tip-face 'popup-tip-face-1)))
+
+(setq! git-messenger:use-magit-popup t)
+(map! :desc "Show git blame under the cursor"
+      "s-B" 'git-messenger:popup-message)
 
 (setq european-calendar-style 't)
 (setq calendar-week-start-day 1);; weeks start on monday

@@ -58,3 +58,5 @@
 (package! logview)
 
 (package! rustic)
+
+(package! git-messenger)
