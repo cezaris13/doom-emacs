@@ -221,6 +221,10 @@
 (map! :desc "Show git blame under the cursor"
       "s-B" 'git-messenger:popup-message)
 
+;; seems to override any other existing commands
+(bind-key* "C-<tab>" 'next-buffer)
+(bind-key* "C-S-<tab>" 'previous-buffer)
+
 (setq european-calendar-style 't)
 (setq calendar-week-start-day 1);; weeks start on monday
 
@@ -265,3 +269,40 @@
 (add-hook 'c-mode-hook #'rainbow-mode)
 ;; scrolling in pdf file
 (setq doc-view-continuous t)
+
+(with-eval-after-load 'tramp
+  (eval-when-compile (require 'tramp))
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+  (setq tramp-completion-use-auth-sources nil)
+  (setq rustic-format-on-save nil)
+  )
+
+(after! tramp-mode
+  (setq projectile-mode-line "Projectile")
+  (setq rustic-format-on-save nil)
+  (setq tramp-completion-method 'fuzzy)
+  (setq completion-ignore-case t)
+  (setq tramp-default-remote-shell "/bin/bash")
+  )
+
+(after! eshell
+    (setq eshell-banner-message
+        (format "%s %s\n"
+            (propertize (format " %s " (string-trim (buffer-name)))
+                'face 'doom-modeline-panel)
+            (propertize
+                (current-time-string)
+                'face 'font-lock-keyword-face
+            )
+         )
+    )
+   ;; disable company mode in remote
+    (add-hook! 'eshell-directory-change-hook
+        (company-mode
+           (if (file-remote-p default-directory)
+               -1
+               +1
+           )
+        )
+    )
+)

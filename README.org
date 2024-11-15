@@ -14,6 +14,8 @@
   - [[#org-mode][Org mode]]
   - [[#misc][Misc]]
   - [[#additional-info][Additional info]]
+  - [[#tramp][Tramp]]
+  - [[#eshell][eshell]]
 
 * Configuration
 ** User data
@@ -35,15 +37,15 @@
       doom-symbol-font (font-spec :family "Symbola" :size 22 :weight 'Regular))
 
 
- ;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
- ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 #+end_src
 
 #+RESULTS:
 : #<font-spec nil nil Symbola nil nil regular nil nil 22 nil nil nil nil>
 
 ** Theme
- There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
+There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
 #+begin_src emacs-lisp :tangle yes
 (setq doom-theme 'kanagawa-wave)
 (custom-theme-set-faces! 'kanagawa-wave
@@ -100,45 +102,45 @@
 #+end_src
 
 ** Ligatures
- #+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle yes
 (plist-put! +ligatures-extra-symbols
-  ;; org
-  :name          "»"
-  :src_block     "»"
-  :src_block_end "«"
-  :quote         "“"
-  :quote_end     "”"
-  ;; Functional
-  :lambda        "λ"
-  :def           "ƒ"
-  :composition   "∘"
-  :map           "↦"
-  ;; Types
-  :null          "∅"
-  :true          "𝕋"
-  :false         "𝔽"
-  :int           "ℤ"
-  :float         "ℝ"
-  :str           "𝕊"
-  :bool          "𝔹"
-  :list          "𝕃"
-  ;; Flow
-  :not           "￢"
-  :in            "∈"
-  :not-in        "∉"
-  :and           "∧"
-  :or            "∨"
-  :for           "∀"
-  :some          "∃"
-  :return        "⟼"
-  :yield         "⟻"
-  ;; Other
-  :union         "⋃"
-  :intersect     "∩"
-  :diff          "∖"
-  :tuple         "⨂"
-  :pipe          "" ;; FIXME: find a non-private char
-  :dot           "•")  ;; you could also add your own if you want
+            ;; org
+            :name          "»"
+            :src_block     "»"
+            :src_block_end "«"
+            :quote         "“"
+            :quote_end     "”"
+            ;; Functional
+            :lambda        "λ"
+            :def           "ƒ"
+            :composition   "∘"
+            :map           "↦"
+            ;; Types
+            :null          "∅"
+            :true          "𝕋"
+            :false         "𝔽"
+            :int           "ℤ"
+            :float         "ℝ"
+            :str           "𝕊"
+            :bool          "𝔹"
+            :list          "𝕃"
+            ;; Flow
+            :not           "￢"
+            :in            "∈"
+            :not-in        "∉"
+            :and           "∧"
+            :or            "∨"
+            :for           "∀"
+            :some          "∃"
+            :return        "⟼"
+            :yield         "⟻"
+            ;; Other
+            :union         "⋃"
+            :intersect     "∩"
+            :diff          "∖"
+            :tuple         "⨂"
+            :pipe          "" ;; FIXME: find a non-private char
+            :dot           "•")  ;; you could also add your own if you want
 
 (set-ligatures! '(kotlin-mode java-mode)
   :null "null"
@@ -200,25 +202,25 @@
 
 *** C#
 #+begin_src emacs-lisp :tangle yes
-  (use-package omnisharp
-             :after company
-             :init
-             (add-to-list 'company-backends 'company-omnisharp)
-             (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
-             :config
-             (defun my-csharp-mode-setup ()
-               (omnisharp-mode)
-               (company-mode)
-               (flycheck-mode)
-               (setq indent-tabs-mode nil)
-               (setq c-syntactic-indentation t)
-               (c-set-style "ellemtel")
-               (setq c-basic-offset 4)
-               (setq truncate-lines t)
-               (setq tab-width 4)
-               (setq evil-shift-width 4)
-               )
-             :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
+(use-package omnisharp
+  :after company
+  :init
+  (add-to-list 'company-backends 'company-omnisharp)
+  (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
+  :config
+  (defun my-csharp-mode-setup ()
+    (omnisharp-mode)
+    (company-mode)
+    (flycheck-mode)
+    (setq indent-tabs-mode nil)
+    (setq c-syntactic-indentation t)
+    (c-set-style "ellemtel")
+    (setq c-basic-offset 4)
+    (setq truncate-lines t)
+    (setq tab-width 4)
+    (setq evil-shift-width 4)
+    )
+  :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
 #+end_src
 
 ** Keybindings
@@ -281,7 +283,7 @@
   )
 
 (map! :desc "Find references of the word under cursor in the project"
-        "s-F" 'find-references-under-cursor)
+      "s-F" 'find-references-under-cursor)
 #+end_src
 
 #+RESULTS:
@@ -314,15 +316,16 @@
 *** Format whole buffer
 #+begin_src emacs-lisp :tangle yes
 ;; TODO
-(defun iwb ()
-  "indent whole buffer"
-  (interactive)
-  (delete-trailing-whitespace)
-  (indent-region (point-min) (point-max) nil))
+(after! typescript-mode
+  (map! :desc "Format region or buffer"
+        "s-L" `tide-format)
+  )
+
+(map! :desc "Format region or buffer"
+      "s-L" `+format/region-or-buffer)
 #+end_src
 
 #+RESULTS:
-: iwb
 
 *** Blame of one line
 #+begin_src emacs-lisp :tangle yes
@@ -348,6 +351,16 @@
 
 #+RESULTS:
 
+*** ctrl-tab for buffer switching
+#+begin_src emacs-lisp
+;; seems to override any other existing commands
+(bind-key* "C-<tab>" 'next-buffer)
+(bind-key* "C-S-<tab>" 'previous-buffer)
+#+end_src
+
+#+RESULTS:
+: iflipb-previous-buffer
+
 ** Org mode
 *** Calendar settings
 #+begin_src emacs-lisp :tangle yes
@@ -360,17 +373,17 @@
 (after! org
   (setq org-todo-keywords
         '((sequence "TODO(t)"
-                    "PROJ(p)"
-                    "LOOP(R)"
-                    "STRT(s)"
-                    "WAIT(w)"
-                    "LECTURE(l)"
-                    "ROUTINE(r)"
-                    "HOLD(h)"
-                    "IDEA(i)"
-                    "|"
-                    "DONE(d)"
-                    "KILL(k)")
+           "PROJ(p)"
+           "LOOP(R)"
+           "STRT(s)"
+           "WAIT(w)"
+           "LECTURE(l)"
+           "ROUTINE(r)"
+           "HOLD(h)"
+           "IDEA(i)"
+           "|"
+           "DONE(d)"
+           "KILL(k)")
           (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
           (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
   (setq org-todo-keyword-faces
@@ -384,25 +397,25 @@
           ("ROUTINE" . (:foreground "violet"))
           ("NO" . +org-todo-cancel)
           ("KILL" . +org-todo-cancel)))
-)
- #+end_src
+  )
+#+end_src
 
 *** Org bullets
- #+begin_src emacs-lisp :tangle yes
-  (require 'org-checklist)
-  (require 'org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (setq org-bullets-bullet-list '("◉" "○"))
- #+end_src
- #+RESULTS:
- | ◉ | ○ |
+#+begin_src emacs-lisp :tangle yes
+(require 'org-checklist)
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(setq org-bullets-bullet-list '("◉" "○"))
+#+end_src
+#+RESULTS:
+| ◉ | ○ |
 
 ** Misc
 #+begin_src emacs-lisp :tangle yes
 (save-place-mode 1)
 (yas-global-mode 1)
 
- ;; rainbow mode for braces
+;; rainbow mode for braces
 (add-hook 'c-mode-hook #'rainbow-mode)
 ;; scrolling in pdf file
 (setq doc-view-continuous t)
@@ -422,3 +435,51 @@
 - To get information about any of these functions/macros, move the cursor over the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
 - This will open documentation for it, including demos of how they are used.
 - You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implement
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+
+** Tramp
+#+begin_src emacs-lisp :tangle yes
+(with-eval-after-load 'tramp
+  (eval-when-compile (require 'tramp))
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+  (setq tramp-completion-use-auth-sources nil)
+  (setq rustic-format-on-save nil)
+  )
+
+(after! tramp-mode
+  (setq projectile-mode-line "Projectile")
+  (setq rustic-format-on-save nil)
+  (setq tramp-completion-method 'fuzzy)
+  (setq completion-ignore-case t)
+  (setq tramp-default-remote-shell "/bin/bash")
+  )
+#+end_src
+
+#+RESULTS:
+
+** eshell
+#+begin_src emacs-lisp :tangle yes
+(after! eshell
+    (setq eshell-banner-message
+        (format "%s %s\n"
+            (propertize (format " %s " (string-trim (buffer-name)))
+                'face 'doom-modeline-panel)
+            (propertize
+                (current-time-string)
+                'face 'font-lock-keyword-face
+            )
+         )
+    )
+   ;; disable company mode in remote
+    (add-hook! 'eshell-directory-change-hook
+        (company-mode
+           (if (file-remote-p default-directory)
+               -1
+               +1
+           )
+        )
+    )
+)
+#+end_src
+
+#+RESULTS:
