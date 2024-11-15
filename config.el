@@ -5,8 +5,8 @@
       doom-symbol-font (font-spec :family "Symbola" :size 22 :weight 'Regular))
 
 
- ;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
- ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 (setq doom-theme 'kanagawa-wave)
 (custom-theme-set-faces! 'kanagawa-wave
@@ -39,43 +39,43 @@
 (setq auto-window-vscroll nil)
 
 (plist-put! +ligatures-extra-symbols
-  ;; org
-  :name          "»"
-  :src_block     "»"
-  :src_block_end "«"
-  :quote         "“"
-  :quote_end     "”"
-  ;; Functional
-  :lambda        "λ"
-  :def           "ƒ"
-  :composition   "∘"
-  :map           "↦"
-  ;; Types
-  :null          "∅"
-  :true          "𝕋"
-  :false         "𝔽"
-  :int           "ℤ"
-  :float         "ℝ"
-  :str           "𝕊"
-  :bool          "𝔹"
-  :list          "𝕃"
-  ;; Flow
-  :not           "￢"
-  :in            "∈"
-  :not-in        "∉"
-  :and           "∧"
-  :or            "∨"
-  :for           "∀"
-  :some          "∃"
-  :return        "⟼"
-  :yield         "⟻"
-  ;; Other
-  :union         "⋃"
-  :intersect     "∩"
-  :diff          "∖"
-  :tuple         "⨂"
-  :pipe          "" ;; FIXME: find a non-private char
-  :dot           "•")  ;; you could also add your own if you want
+            ;; org
+            :name          "»"
+            :src_block     "»"
+            :src_block_end "«"
+            :quote         "“"
+            :quote_end     "”"
+            ;; Functional
+            :lambda        "λ"
+            :def           "ƒ"
+            :composition   "∘"
+            :map           "↦"
+            ;; Types
+            :null          "∅"
+            :true          "𝕋"
+            :false         "𝔽"
+            :int           "ℤ"
+            :float         "ℝ"
+            :str           "𝕊"
+            :bool          "𝔹"
+            :list          "𝕃"
+            ;; Flow
+            :not           "￢"
+            :in            "∈"
+            :not-in        "∉"
+            :and           "∧"
+            :or            "∨"
+            :for           "∀"
+            :some          "∃"
+            :return        "⟼"
+            :yield         "⟻"
+            ;; Other
+            :union         "⋃"
+            :intersect     "∩"
+            :diff          "∖"
+            :tuple         "⨂"
+            :pipe          "" ;; FIXME: find a non-private char
+            :dot           "•")  ;; you could also add your own if you want
 
 (set-ligatures! '(kotlin-mode java-mode)
   :null "null"
@@ -125,24 +125,24 @@
   (lsp-mode . lsp-enable-which-key-integration))
 
 (use-package omnisharp
-           :after company
-           :init
-           (add-to-list 'company-backends 'company-omnisharp)
-           (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
-           :config
-           (defun my-csharp-mode-setup ()
-             (omnisharp-mode)
-             (company-mode)
-             (flycheck-mode)
-             (setq indent-tabs-mode nil)
-             (setq c-syntactic-indentation t)
-             (c-set-style "ellemtel")
-             (setq c-basic-offset 4)
-             (setq truncate-lines t)
-             (setq tab-width 4)
-             (setq evil-shift-width 4)
-             )
-           :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
+  :after company
+  :init
+  (add-to-list 'company-backends 'company-omnisharp)
+  (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
+  :config
+  (defun my-csharp-mode-setup ()
+    (omnisharp-mode)
+    (company-mode)
+    (flycheck-mode)
+    (setq indent-tabs-mode nil)
+    (setq c-syntactic-indentation t)
+    (c-set-style "ellemtel")
+    (setq c-basic-offset 4)
+    (setq truncate-lines t)
+    (setq tab-width 4)
+    (setq evil-shift-width 4)
+    )
+  :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
 
 (defun open-external-file-explorer ()
   "Opens file explorer in the current directory"
@@ -180,7 +180,7 @@
   )
 
 (map! :desc "Find references of the word under cursor in the project"
-        "s-F" 'find-references-under-cursor)
+      "s-F" 'find-references-under-cursor)
 
 (global-set-key [f12] 'xref-find-definitions)
 
@@ -194,11 +194,13 @@
       "C-/" 'comment-line)
 
 ;; TODO
-(defun iwb ()
-  "indent whole buffer"
-  (interactive)
-  (delete-trailing-whitespace)
-  (indent-region (point-min) (point-max) nil))
+(after! typescript-mode
+  (map! :desc "Format region or buffer"
+        "s-L" `tide-format)
+  )
+
+(map! :desc "Format region or buffer"
+      "s-L" `+format/region-or-buffer)
 
 ;; (defface popup-tip-face-1
 ;;   '((t (:background "red" :foreground "black")))
@@ -225,17 +227,17 @@
 (after! org
   (setq org-todo-keywords
         '((sequence "TODO(t)"
-                    "PROJ(p)"
-                    "LOOP(R)"
-                    "STRT(s)"
-                    "WAIT(w)"
-                    "LECTURE(l)"
-                    "ROUTINE(r)"
-                    "HOLD(h)"
-                    "IDEA(i)"
-                    "|"
-                    "DONE(d)"
-                    "KILL(k)")
+           "PROJ(p)"
+           "LOOP(R)"
+           "STRT(s)"
+           "WAIT(w)"
+           "LECTURE(l)"
+           "ROUTINE(r)"
+           "HOLD(h)"
+           "IDEA(i)"
+           "|"
+           "DONE(d)"
+           "KILL(k)")
           (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
           (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
   (setq org-todo-keyword-faces
@@ -249,7 +251,7 @@
           ("ROUTINE" . (:foreground "violet"))
           ("NO" . +org-todo-cancel)
           ("KILL" . +org-todo-cancel)))
-)
+  )
 
 (require 'org-checklist)
 (require 'org-bullets)
@@ -259,7 +261,7 @@
 (save-place-mode 1)
 (yas-global-mode 1)
 
- ;; rainbow mode for braces
+;; rainbow mode for braces
 (add-hook 'c-mode-hook #'rainbow-mode)
 ;; scrolling in pdf file
 (setq doc-view-continuous t)
