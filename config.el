@@ -52,13 +52,13 @@
             :map           "↦"
             ;; Types
             :null          "∅"
-            :true          "𝕋"
-            :false         "𝔽"
+            :true          "⊤"
+            :false         "⊥"
             :int           "ℤ"
             :float         "ℝ"
-            :str           "𝕊"
+            :str           "S"
             :bool          "𝔹"
-            :list          "𝕃"
+            :list          "L"
             ;; Flow
             :not           "￢"
             :in            "∈"
@@ -195,7 +195,7 @@
 
 ;; TODO
 (after! typescript-mode
-  (map! :desc "Format region or buffer"
+  (map! :desc "Format region or buffer" ;; fix this, in python it is formatter with this.
         "s-L" `tide-format)
   )
 
@@ -297,12 +297,37 @@
          )
     )
    ;; disable company mode in remote
-    (add-hook! 'eshell-directory-change-hook
-        (company-mode
-           (if (file-remote-p default-directory)
-               -1
-               +1
-           )
-        )
-    )
+    ;; (add-hook! 'eshell-directory-change-hook
+    ;;     (company-mode
+    ;;        (if (file-remote-p default-directory)
+    ;;            -1
+    ;;            +1
+    ;;        )
+    ;;     )
+    ;; )
 )
+
+(after! dap-mode
+  (require 'dap-cpptools)
+
+ (add-hook 'rustic-mode-hook (lambda ()
+   (dap-register-debug-template "Rust LLDB Debug Configuration"
+	                        (list :type "cppdbg"
+	                              :request "launch"
+	                              :name "Rust::Run"
+	                              :MIMode "lldb"
+                                      :targetarchitecture "arm"
+	                              :gdbpath "rust-lldb"
+	                              :program (concat (projectile-project-root) "target/debug/" (projectile-project-name)) ;; Requires that the rust project is a project in projectile
+	                              :environment []
+	                              :cwd (projectile-project-root)))))
+
+   (setq lsp-rust-analyzer-debug-lens-extra-dap-args
+        `(:MIMode "lldb"
+          ;; :miDebuggerPath "rust-gdb"
+          ;; :miDebuggerPath "rust-lldb"
+          :stopAtEntry t
+          :externalConsole
+          :json-false))
+
+  )

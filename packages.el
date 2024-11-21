@@ -60,3 +60,5 @@
 (package! rustic)
 
 (package! git-messenger)
+
+(package! format-all)

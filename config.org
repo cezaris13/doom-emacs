@@ -16,6 +16,7 @@
   - [[#additional-info][Additional info]]
   - [[#tramp][Tramp]]
   - [[#eshell][eshell]]
+  - [[#dap-mode][DAP mode]]
 
 * Configuration
 ** User data
@@ -117,13 +118,13 @@ There are two ways to load a theme. Both assume the theme is installed and avail
             :map           "↦"
             ;; Types
             :null          "∅"
-            :true          "𝕋"
-            :false         "𝔽"
+            :true          "⊤"
+            :false         "⊥"
             :int           "ℤ"
             :float         "ℝ"
-            :str           "𝕊"
+            :str           "S"
             :bool          "𝔹"
-            :list          "𝕃"
+            :list          "L"
             ;; Flow
             :not           "￢"
             :in            "∈"
@@ -155,6 +156,8 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   :not "!"
   )
 #+end_src
+
+#+RESULTS:
 
 ** Languages setup
 *** General LSP
@@ -198,7 +201,12 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   (lsp-face-highlight-textual ((t (:underline t :background nil :foreground nil))))
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
+
+
 #+end_src
+
+#+RESULTS:
+| (lambda nil (dap-register-debug-template Rust LLDB Debug Configuration (list :type cppdbg :request launch :name Rust::Run :MIMode lldb :gdbpath rust-lldb :program (concat (projectile-project-root) target/debug/ (projectile-project-name)) :environment [] :cwd (projectile-project-root)))) | rainbow-delimiters-mode | +evil-embrace-angle-bracket-modes-hook-h |
 
 *** C#
 #+begin_src emacs-lisp :tangle yes
@@ -317,7 +325,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 #+begin_src emacs-lisp :tangle yes
 ;; TODO
 (after! typescript-mode
-  (map! :desc "Format region or buffer"
+  (map! :desc "Format region or buffer" ;; fix this, in python it is formatter with this.
         "s-L" `tide-format)
   )
 
@@ -359,7 +367,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 #+end_src
 
 #+RESULTS:
-: iflipb-previous-buffer
+: previous-buffer
 
 ** Org mode
 *** Calendar settings
@@ -471,15 +479,47 @@ There are two ways to load a theme. Both assume the theme is installed and avail
          )
     )
    ;; disable company mode in remote
-    (add-hook! 'eshell-directory-change-hook
-        (company-mode
-           (if (file-remote-p default-directory)
-               -1
-               +1
-           )
-        )
-    )
+    ;; (add-hook! 'eshell-directory-change-hook
+    ;;     (company-mode
+    ;;        (if (file-remote-p default-directory)
+    ;;            -1
+    ;;            +1
+    ;;        )
+    ;;     )
+    ;; )
 )
 #+end_src
 
 #+RESULTS:
+:  config.org  Tue Nov 19 10:39:29 2024
+
+** DAP mode
+#+begin_src emacs-lisp :tangle yes
+(after! dap-mode
+  (require 'dap-cpptools)
+
+ (add-hook 'rustic-mode-hook (lambda ()
+   (dap-register-debug-template "Rust LLDB Debug Configuration"
+	                        (list :type "cppdbg"
+	                              :request "launch"
+	                              :name "Rust::Run"
+	                              :MIMode "lldb"
+                                      :targetarchitecture "arm"
+	                              :gdbpath "rust-lldb"
+	                              :program (concat (projectile-project-root) "target/debug/" (projectile-project-name)) ;; Requires that the rust project is a project in projectile
+	                              :environment []
+	                              :cwd (projectile-project-root)))))
+
+   (setq lsp-rust-analyzer-debug-lens-extra-dap-args
+        `(:MIMode "lldb"
+          ;; :miDebuggerPath "rust-gdb"
+          ;; :miDebuggerPath "rust-lldb"
+          :stopAtEntry t
+          :externalConsole
+          :json-false))
+
+  )
+#+end_src
+
+#+RESULTS:
+| :MIMode | lldb | :miDebuggerPath | rust-lldb | :stopAtEntry | t | :externalConsole | :json-false |
