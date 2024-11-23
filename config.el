@@ -25,10 +25,11 @@
 
 (setq display-line-numbers-type 'relative);; relative line numbers(like in vim)
 
+;; linux (works for mx master 3 and M705)
 (global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
 (global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left 6)))
 
-;; for MX master 3 mouse
+;; for MX master 3 mouse (mac)
 (global-set-key (kbd "<wheel-right>") (lambda () (interactive) (scroll-left 6)))
 (global-set-key (kbd "<wheel-left>") (lambda () (interactive) (scroll-right 6)))
 
@@ -159,14 +160,23 @@
 (use-package! projectile
   :config
   ;; Bind s-S-o to find file in project using projectile (command+shift+o)
+  ;; mac
   (map! :desc "Open Find file in the project"
         "s-O" #'projectile-find-file))
+
+  ;; linux
+  (bind-key* "C-S-o" 'projectile-find-file)
 
 (use-package! neotree
   :config
   ;; Bind s-S-j to open NeoTree to the current file's location (command+shift+j)
+  ;; mac
   (map! :desc "Open NeoTree at current file"
         "s-J" #'+neotree/find-this-file))
+
+
+  ;; linux
+  (bind-key* "C-S-j" '+neotree/find-this-file)
 
 (defun find-references-under-cursor ()
   "Find references of the word under the cursor using projectile-find-references"
@@ -179,13 +189,22 @@
     )
   )
 
+;; mac
 (map! :desc "Find references of the word under cursor in the project"
       "s-F" 'find-references-under-cursor)
 
+;; linux
+(bind-key* "C-S-f" 'find-references-under-cursor)
+
 (global-set-key [f12] 'xref-find-definitions)
 
+;; mac
 (map! :desc "Find definition under cursor"
       "s-<mouse-1>" 'xref-find-definitions)
+
+;; linux
+(map! :desc "Find definition under cursor"
+      "S-s-<mouse-1>" 'xref-find-definitions)
 
 (map! :desc "Split window vertically"
       "C-\\" 'evil-window-vsplit)
@@ -199,8 +218,12 @@
         "s-L" `tide-format)
   )
 
+;; mac
 (map! :desc "Format region or buffer"
       "s-L" `+format/region-or-buffer)
+
+;; linux
+(bind-key* "C-S-l" '+format/region-or-buffer)
 
 ;; (defface popup-tip-face-1
 ;;   '((t (:background "red" :foreground "black")))
@@ -224,6 +247,8 @@
 ;; seems to override any other existing commands
 (bind-key* "C-<tab>" 'next-buffer)
 (bind-key* "C-S-<tab>" 'previous-buffer)
+;; for linux
+(bind-key* "C-<iso-lefttab>" 'previous-buffer)
 
 (setq european-calendar-style 't)
 (setq calendar-week-start-day 1);; weeks start on monday
