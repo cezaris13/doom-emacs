@@ -62,3 +62,5 @@
 (package! git-messenger)
 
 (package! format-all)
+
+(package! bnf-mode)

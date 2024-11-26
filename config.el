@@ -343,9 +343,12 @@
 	                              :MIMode "lldb"
                                       :targetarchitecture "arm"
 	                              :gdbpath "rust-lldb"
-	                              :program (concat (projectile-project-root) "target/debug/" (projectile-project-name)) ;; Requires that the rust project is a project in projectile
+	                              ;; :program (concat (projectile-project-root) "target/debug/" (projectile-project-name)) ;; Requires that the rust project is a project in projectile
+	                              ;; :cwd (projectile-project-root)
+                                      :program "${workspaceFolder}/target/debug/${workspaceFolderBasename}"
+                                      :cwd "${workspaceFolder}"
 	                              :environment []
-	                              :cwd (projectile-project-root)))))
+                                      ))))
 
    (setq lsp-rust-analyzer-debug-lens-extra-dap-args
         `(:MIMode "lldb"
