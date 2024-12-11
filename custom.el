@@ -6,7 +6,7 @@
  '(custom-safe-themes
    '("daa27dcbe26a280a9425ee90dc7458d85bd540482b93e9fa94d4f43327128077" "88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e" "9f297216c88ca3f47e5f10f8bd884ab24ac5bc9d884f0f23589b0a46a608fe14" default))
  '(package-selected-packages
-   '(bnf-mode dap-mode format-all tramp-auto-auth ivy-posframe ivy vdiff vc-msg magit language-id json-reformat inheritenv git-messenger all-the-icons)))
+   '(lox-mode xml-format bnf-mode dap-mode format-all tramp-auto-auth ivy-posframe ivy vdiff vc-msg magit language-id json-reformat inheritenv git-messenger all-the-icons)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -189,7 +189,6 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   (lsp-keymap-prefix "M-m l")
   (lsp-modeline-diagnostics-enable nil)
   (lsp-keep-workspace-alive nil)
-  (lsp-auto-execute-action nil)
   (lsp-before-save-edits nil)
   (lsp-eldoc-enable-hover nil)
   (lsp-diagnostic-package :none)
@@ -207,7 +206,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 #+end_src
 
 #+RESULTS:
-| (lambda nil (dap-register-debug-template Rust LLDB Debug Configuration (list :type cppdbg :request launch :name Rust::Run :MIMode lldb :gdbpath rust-lldb :program (concat (projectile-project-root) target/debug/ (projectile-project-name)) :environment [] :cwd (projectile-project-root)))) | rainbow-delimiters-mode | +evil-embrace-angle-bracket-modes-hook-h |
+| dap-tooltip-update-mouse-motions-if-enabled | lsp-completion-mode | +lsp-optimization-mode | +lookup--init-lsp-mode-handlers-h | lsp-enable-which-key-integration | lsp-ui-mode |
 
 *** C#
 #+begin_src emacs-lisp :tangle yes
@@ -293,12 +292,18 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 (defun find-references-under-cursor ()
   "Find references of the word under the cursor using projectile-find-references"
   (interactive)
-  (let ((word (thing-at-point 'word t)))  ; Get the word at point
+  (let (word (get-string-under-cursor))
     (if word
         (projectile-find-references word)
       (projectile-find-references)
       )
     )
+  )
+
+(defun get-string-under-cursor ()
+  "Get the string (including underscores) under the cursor."
+  (interactive)
+  (bounds-of-thing-at-point 'symbol)
   )
 
 ;; mac
@@ -479,12 +484,12 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   (eval-when-compile (require 'tramp))
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
   (setq tramp-completion-use-auth-sources nil)
-  (setq rustic-format-on-save nil)
+  ;; (setq rustic-format-on-save nil)
   )
 
 (after! tramp-mode
   (setq projectile-mode-line "Projectile")
-  (setq rustic-format-on-save nil)
+  ;; (setq rustic-format-on-save nil)
   (setq tramp-completion-method 'fuzzy)
   (setq completion-ignore-case t)
   (setq tramp-default-remote-shell "/bin/bash")

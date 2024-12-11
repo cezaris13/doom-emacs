@@ -64,3 +64,5 @@
 (package! format-all)
 
 (package! bnf-mode)
+
+(package! lox-mode)

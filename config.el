@@ -111,7 +111,6 @@
   (lsp-keymap-prefix "M-m l")
   (lsp-modeline-diagnostics-enable nil)
   (lsp-keep-workspace-alive nil)
-  (lsp-auto-execute-action nil)
   (lsp-before-save-edits nil)
   (lsp-eldoc-enable-hover nil)
   (lsp-diagnostic-package :none)
@@ -181,12 +180,18 @@
 (defun find-references-under-cursor ()
   "Find references of the word under the cursor using projectile-find-references"
   (interactive)
-  (let ((word (thing-at-point 'word t)))  ; Get the word at point
+  (let (word (get-string-under-cursor))
     (if word
         (projectile-find-references word)
       (projectile-find-references)
       )
     )
+  )
+
+(defun get-string-under-cursor ()
+  "Get the string (including underscores) under the cursor."
+  (interactive)
+  (bounds-of-thing-at-point 'symbol)
   )
 
 ;; mac
@@ -299,12 +304,12 @@
   (eval-when-compile (require 'tramp))
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
   (setq tramp-completion-use-auth-sources nil)
-  (setq rustic-format-on-save nil)
+  ;; (setq rustic-format-on-save nil)
   )
 
 (after! tramp-mode
   (setq projectile-mode-line "Projectile")
-  (setq rustic-format-on-save nil)
+  ;; (setq rustic-format-on-save nil)
   (setq tramp-completion-method 'fuzzy)
   (setq completion-ignore-case t)
   (setq tramp-default-remote-shell "/bin/bash")
