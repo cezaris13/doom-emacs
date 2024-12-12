@@ -18,6 +18,15 @@
   '(diff-hl-change :foreground "#A86E51")
   )
 
+;; magit blame colors
+(custom-set-faces
+  '(magit-blame-name ((t (:background "#363646" :weight bold))))
+  '(magit-blame-summary ((t (:background "#363646" :weight bold))))
+  '(magit-blame-heading ((t (:background "#363646" :weight bold))))
+  '(magit-blame-hash ((t (:background "#363646" :weight bold))))
+  '(magit-blame-date ((t (:background "#363646" :weight bold))))
+  )
+
 ;; add custom image to emacs home screen
 (setq fancy-splash-image "~/.config/doom/splash/kanagawa.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
 
@@ -364,3 +373,23 @@
           :json-false))
 
   )
+
+(defun open-buffer-in-new-frame-and-close-original ()
+  "Move the current buffer to a new frame and close the window in the original frame."
+  (interactive)
+  (let ((buffer (current-buffer)))
+    (select-frame (make-frame-command)) ; Create a new frame and switch to it
+    (switch-to-buffer buffer)           ; Switch to the current buffer
+    (delete-window)))                   ; Close the original window in the main frame
+
+(defun move-buffer-to-existing-frame ()
+  "Move the current buffer to another existing frame if one exists."
+  (interactive)
+  (let ((buffer (current-buffer))
+        (frames (delq (selected-frame) (frame-list)))) ; All frames except the current one
+    (if frames
+        (progn
+          (select-frame-set-input-focus (car frames)) ; Switch to the first other frame
+          (switch-to-buffer buffer)
+          (delete-window)) ; Close the window in the original frame
+      (message "No other frames exist."))))

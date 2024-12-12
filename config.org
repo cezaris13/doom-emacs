@@ -43,7 +43,6 @@
 #+end_src
 
 #+RESULTS:
-: #<font-spec nil nil Symbola nil nil regular nil nil 22 nil nil nil nil>
 
 ** Theme
 There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
@@ -56,6 +55,15 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   '(mode-line :background "#16161D" :height 80)
   '(default :background "#1F1F28")
   '(diff-hl-change :foreground "#A86E51")
+  )
+
+;; magit blame colors
+(custom-set-faces
+  '(magit-blame-name ((t (:background "#363646" :weight bold))))
+  '(magit-blame-summary ((t (:background "#363646" :weight bold))))
+  '(magit-blame-heading ((t (:background "#363646" :weight bold))))
+  '(magit-blame-hash ((t (:background "#363646" :weight bold))))
+  '(magit-blame-date ((t (:background "#363646" :weight bold))))
   )
 
 ;; add custom image to emacs home screen
@@ -558,3 +566,33 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 #+end_src
 
 #+RESULTS:
+#+begin_src emacs-lisp :tangle yes
+(defun open-buffer-in-new-frame-and-close-original ()
+  "Move the current buffer to a new frame and close the window in the original frame."
+  (interactive)
+  (let ((buffer (current-buffer)))
+    (select-frame (make-frame-command)) ; Create a new frame and switch to it
+    (switch-to-buffer buffer)           ; Switch to the current buffer
+    (delete-window)))                   ; Close the original window in the main frame
+#+end_src
+
+#+RESULTS:
+: open-buffer-in-new-frame-and-close-original
+
+#+begin_src emacs-lisp :tangle yes
+(defun move-buffer-to-existing-frame ()
+  "Move the current buffer to another existing frame if one exists."
+  (interactive)
+  (let ((buffer (current-buffer))
+        (frames (delq (selected-frame) (frame-list)))) ; All frames except the current one
+    (if frames
+        (progn
+          (select-frame-set-input-focus (car frames)) ; Switch to the first other frame
+          (switch-to-buffer buffer)
+          (delete-window)) ; Close the window in the original frame
+      (message "No other frames exist."))))
+
+#+end_src
+
+#+RESULTS:
+: move-buffer-to-existing-frame
