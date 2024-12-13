@@ -17,6 +17,7 @@
   - [[#tramp][Tramp]]
   - [[#eshell][eshell]]
   - [[#dap-mode][DAP mode]]
+  - [[#flycheck][Flycheck]]
 
 * Configuration
 ** User data
@@ -190,6 +191,8 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   :config
   (setq rustic-format-on-save t))
 
+(setq lsp-rust-server 'rust-analyzer)
+
 (use-package lsp-mode
   :commands lsp
   :custom
@@ -200,6 +203,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   (lsp-before-save-edits nil)
   (lsp-eldoc-enable-hover nil)
   (lsp-diagnostic-package :none)
+  (lsp-diagnostics-provider :none)
   (lsp-completion-provider :none)
   (lsp-file-watch-threshold 1500)
   (lsp-enable-links)
@@ -209,8 +213,6 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   (lsp-face-highlight-textual ((t (:underline t :background nil :foreground nil))))
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
-
-
 #+end_src
 
 #+RESULTS:
@@ -596,3 +598,16 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 
 #+RESULTS:
 : move-buffer-to-existing-frame
+
+** Flycheck
+#+begin_src emacs-lisp :tangle yes
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
+(use-package flycheck-inline
+  :ensure t
+  :init (global-flycheck-inline-mode))
+  #+end_src
+
+  #+RESULTS:
+  : flycheck-inline

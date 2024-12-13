@@ -113,6 +113,8 @@
   :config
   (setq rustic-format-on-save t))
 
+(setq lsp-rust-server 'rust-analyzer)
+
 (use-package lsp-mode
   :commands lsp
   :custom
@@ -123,6 +125,7 @@
   (lsp-before-save-edits nil)
   (lsp-eldoc-enable-hover nil)
   (lsp-diagnostic-package :none)
+  (lsp-diagnostics-provider :none)
   (lsp-completion-provider :none)
   (lsp-file-watch-threshold 1500)
   (lsp-enable-links)
@@ -393,3 +396,10 @@
           (switch-to-buffer buffer)
           (delete-window)) ; Close the window in the original frame
       (message "No other frames exist."))))
+
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
+(use-package flycheck-inline
+  :ensure t
+  :init (global-flycheck-inline-mode))

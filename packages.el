@@ -66,3 +66,7 @@
 (package! bnf-mode)
 
 (package! lox-mode)
+
+(package! flycheck-rust)
+
+(package! flycheck-inline)
