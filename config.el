@@ -124,8 +124,7 @@
   (lsp-keep-workspace-alive nil)
   (lsp-before-save-edits nil)
   (lsp-eldoc-enable-hover nil)
-  (lsp-diagnostic-package :none)
-  (lsp-diagnostics-provider :none)
+  (lsp-diagnostics-provider :flycheck)
   (lsp-completion-provider :none)
   (lsp-file-watch-threshold 1500)
   (lsp-enable-links)
@@ -398,8 +397,8 @@
       (message "No other frames exist."))))
 
 (with-eval-after-load 'rust-mode
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
-(use-package flycheck-inline
-  :ensure t
-  :init (global-flycheck-inline-mode))
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)
+  (add-hook 'lsp-diagnostics-mode-hook #'flycheck-inline-mode)
+  (setq-default flycheck-rust-checker 'rustic-clippy)
+  )
