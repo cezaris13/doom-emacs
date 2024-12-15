@@ -13,11 +13,13 @@
   - [[#keybindings][Keybindings]]
   - [[#org-mode][Org mode]]
   - [[#misc][Misc]]
-  - [[#additional-info][Additional info]]
   - [[#tramp][Tramp]]
-  - [[#eshell][eshell]]
-  - [[#dap-mode][DAP mode]]
+  - [[#eshell][Eshell]]
+  - [[#dap-mode][Dap mode]]
+  - [[#frame-management][Frame management]]
   - [[#flycheck][Flycheck]]
+  - [[#minimap][Minimap]]
+  - [[#additional-info][Additional info]]
 
 * Configuration
 ** User data
@@ -58,7 +60,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   '(diff-hl-change :foreground "#A86E51")
   )
 
-;; magit blame colors
+;; Magit blame colors
 (custom-set-faces
   '(magit-blame-name ((t (:background "#363646" :weight bold))))
   '(magit-blame-summary ((t (:background "#363646" :weight bold))))
@@ -67,8 +69,9 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   '(magit-blame-date ((t (:background "#363646" :weight bold))))
   )
 
-;; add custom image to emacs home screen
-(setq fancy-splash-image "~/.config/doom/splash/kanagawa.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+;; Add custom image to emacs home screen
+;; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+(setq fancy-splash-image "~/.config/doom/splash/kanagawa.png")
 
 #+end_src
 
@@ -85,7 +88,8 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 ** Line number style
 - This determines the style of line numbers in effect. If set to `nil', line numbers are disabled. For relative line numbers, set this to `relative'.
 #+begin_src emacs-lisp :tangle yes
-(setq display-line-numbers-type 'relative);; relative line numbers(like in vim)
+;; relative line numbers(like in vim)
+(setq display-line-numbers-type 'relative)
 #+end_src
 
 ** Scrolling
@@ -207,15 +211,12 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   (lsp-file-watch-threshold 1500)
   (lsp-enable-links)
   :custom-face
-  (lsp-face-highlight-read ((t (:underline t :background nil :foreground nil))))
-  (lsp-face-highlight-write ((t (:underline t :background nil :foreground nil))))
-  (lsp-face-highlight-textual ((t (:underline t :background nil :foreground nil))))
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
 #+end_src
 
 #+RESULTS:
-| dap-tooltip-update-mouse-motions-if-enabled | lsp-completion-mode | +lsp-optimization-mode | +lookup--init-lsp-mode-handlers-h | lsp-enable-which-key-integration | lsp-ui-mode |
+| lsp-enable-which-key-integration | lsp-ui-mode |
 
 *** C#
 #+begin_src emacs-lisp :tangle yes
@@ -377,21 +378,6 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 
 *** Blame of one line
 #+begin_src emacs-lisp :tangle yes
-;; (defface popup-tip-face-1
-;;   '((t (:background "red" :foreground "black")))
-;;   "Face for popup tip."
-;;   :group 'popup)
-
-;; ;; (setq! popup-tip-face popup-tip-face1)
-
-;; ;; (add-hook 'git-messenger:before-popup-hook
-;; ;;           (lambda ()
-;; ;;             (setq-local popup-face 'git-messenger-popup-face)))
-;; ;; Use `before-popup-hook` to customize popup style
-;; (add-hook 'git-messenger:before-popup-hook
-;;           (lambda (message)
-;;             (setq-local popup-tip-face 'popup-tip-face-1)))
-;; TODO
 (setq! git-messenger:use-magit-popup t)
 (map! :desc "Show git blame under the cursor"
       "s-B" 'git-messenger:popup-message)
@@ -399,7 +385,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 
 #+RESULTS:
 
-*** ctrl-tab for buffer switching
+*** Ctrl-tab for buffer switching
 #+begin_src emacs-lisp
 ;; seems to override any other existing commands
 (bind-key* "C-<tab>" 'next-buffer)
@@ -475,18 +461,6 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 #+RESULTS:
 : t
 
-** Additional info
-- Here are some additional functions/macros that could help you configure Doom:
-  + `load!' for loading external *.el files relative to this one
-  + `use-package!' for configuring packages
-  + `after!' for running code after a package has loaded
-  + `add-load-path!' for adding directories to the `load-path', relative to this file. Emacs searches the `load-path' when you load packages with `require' or `use-package'.
-  + `map!' for binding new keys
-- To get information about any of these functions/macros, move the cursor over the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-- This will open documentation for it, including demos of how they are used.
-- You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implement
-(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
-
 ** Tramp
 #+begin_src emacs-lisp :tangle yes
 (with-eval-after-load 'tramp
@@ -507,7 +481,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 
 #+RESULTS:
 
-** eshell
+** Eshell
 #+begin_src emacs-lisp :tangle yes
 (after! eshell
     (setq eshell-banner-message
@@ -535,7 +509,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 #+RESULTS:
 :  config.org  Tue Nov 19 10:39:29 2024
 
-** DAP mode
+** Dap mode
 #+begin_src emacs-lisp :tangle yes
 (after! dap-mode
   (require 'dap-cpptools)
@@ -566,6 +540,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   )
 #+end_src
 
+** Frame management
 #+RESULTS:
 #+begin_src emacs-lisp :tangle yes
 (defun open-buffer-in-new-frame-and-close-original ()
@@ -610,3 +585,25 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 
   #+RESULTS:
   : rustic-clippy
+
+** Minimap
+ #+begin_src emacs-lisp :tangle yes
+(setq minimap-window-location 'right)
+(custom-set-faces
+ '(minimap-active-region-background
+   ((t (:background "#363646")))))
+ #+end_src
+
+ #+RESULTS:
+
+** Additional info
+- Here are some additional functions/macros that could help you configure Doom:
+  + `load!' for loading external *.el files relative to this one
+  + `use-package!' for configuring packages
+  + `after!' for running code after a package has loaded
+  + `add-load-path!' for adding directories to the `load-path', relative to this file. Emacs searches the `load-path' when you load packages with `require' or `use-package'.
+  + `map!' for binding new keys
+- To get information about any of these functions/macros, move the cursor over the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+- This will open documentation for it, including demos of how they are used.
+- You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implement
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)

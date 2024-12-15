@@ -18,7 +18,7 @@
   '(diff-hl-change :foreground "#A86E51")
   )
 
-;; magit blame colors
+;; Magit blame colors
 (custom-set-faces
   '(magit-blame-name ((t (:background "#363646" :weight bold))))
   '(magit-blame-summary ((t (:background "#363646" :weight bold))))
@@ -27,12 +27,14 @@
   '(magit-blame-date ((t (:background "#363646" :weight bold))))
   )
 
-;; add custom image to emacs home screen
-(setq fancy-splash-image "~/.config/doom/splash/kanagawa.png");; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+;; Add custom image to emacs home screen
+;; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
+(setq fancy-splash-image "~/.config/doom/splash/kanagawa.png")
 
 (setq org-directory "~/Desktop/Org_mode/")
 
-(setq display-line-numbers-type 'relative);; relative line numbers(like in vim)
+;; relative line numbers(like in vim)
+(setq display-line-numbers-type 'relative)
 
 ;; linux (works for mx master 3 and M705)
 (global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right 6)))
@@ -129,9 +131,6 @@
   (lsp-file-watch-threshold 1500)
   (lsp-enable-links)
   :custom-face
-  (lsp-face-highlight-read ((t (:underline t :background nil :foreground nil))))
-  (lsp-face-highlight-write ((t (:underline t :background nil :foreground nil))))
-  (lsp-face-highlight-textual ((t (:underline t :background nil :foreground nil))))
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
 
@@ -241,21 +240,6 @@
 ;; linux
 (bind-key* "C-S-l" '+format/region-or-buffer)
 
-;; (defface popup-tip-face-1
-;;   '((t (:background "red" :foreground "black")))
-;;   "Face for popup tip."
-;;   :group 'popup)
-
-;; ;; (setq! popup-tip-face popup-tip-face1)
-
-;; ;; (add-hook 'git-messenger:before-popup-hook
-;; ;;           (lambda ()
-;; ;;             (setq-local popup-face 'git-messenger-popup-face)))
-;; ;; Use `before-popup-hook` to customize popup style
-;; (add-hook 'git-messenger:before-popup-hook
-;;           (lambda (message)
-;;             (setq-local popup-tip-face 'popup-tip-face-1)))
-;; TODO
 (setq! git-messenger:use-magit-popup t)
 (map! :desc "Show git blame under the cursor"
       "s-B" 'git-messenger:popup-message)
@@ -402,3 +386,8 @@
   (add-hook 'lsp-diagnostics-mode-hook #'flycheck-inline-mode)
   (setq-default flycheck-rust-checker 'rustic-clippy)
   )
+
+(setq minimap-window-location 'right)
+(custom-set-faces
+ '(minimap-active-region-background
+   ((t (:background "#363646")))))
