@@ -332,25 +332,27 @@
     ;; )
 )
 
+(setq dap-auto-configure-features '(sessions locals breakpoints))
+
 (after! dap-mode
   (require 'dap-cpptools)
 
- (add-hook 'rustic-mode-hook (lambda ()
-   (dap-register-debug-template "Rust LLDB Debug Configuration"
-	                        (list :type "cppdbg"
-	                              :request "launch"
-	                              :name "Rust::Run"
-	                              :MIMode "lldb"
-                                      :targetarchitecture "arm"
-	                              :gdbpath "rust-lldb"
-	                              ;; :program (concat (projectile-project-root) "target/debug/" (projectile-project-name)) ;; Requires that the rust project is a project in projectile
-	                              ;; :cwd (projectile-project-root)
-                                      :program "${workspaceFolder}/target/debug/${workspaceFolderBasename}"
-                                      :cwd "${workspaceFolder}"
-	                              :environment []
-                                      ))))
+  (add-hook 'rustic-mode-hook (lambda ()
+                                (dap-register-debug-template "Rust LLDB Debug Configuration"
+	                                                     (list :type "cppdbg"
+	                                                           :request "launch"
+	                                                           :name "Rust::Run"
+	                                                           :MIMode "lldb"
+                                                                   :targetarchitecture "arm"
+	                                                           :gdbpath "rust-lldb"
+	                                                           ;; :program (concat (projectile-project-root) "target/debug/" (projectile-project-name)) ;; Requires that the rust project is a project in projectile
+	                                                           ;; :cwd (projectile-project-root)
+                                                                   :program "${workspaceFolder}/target/debug/${workspaceFolderBasename}"
+                                                                   :cwd "${workspaceFolder}"
+	                                                           :environment []
+                                                                   ))))
 
-   (setq lsp-rust-analyzer-debug-lens-extra-dap-args
+  (setq lsp-rust-analyzer-debug-lens-extra-dap-args
         `(:MIMode "lldb"
           ;; :miDebuggerPath "rust-gdb"
           ;; :miDebuggerPath "rust-lldb"
@@ -358,7 +360,41 @@
           :externalConsole
           :json-false))
 
-  )
+  (with-eval-after-load 'dap-mode
+    (setq dap-default-terminal-kind "integrated")
+    (dap-auto-configure-mode +1))
+
+  (map! :map dap-mode-map
+        :leader
+        :prefix ("d" . "dap")
+        ;; basics
+        :desc "dap next"          "n" #'dap-next
+        :desc "dap step in"       "i" #'dap-step-in
+        :desc "dap step out"      "o" #'dap-step-out
+        :desc "dap continue"      "c" #'dap-continue
+        :desc "dap hydra"         "h" #'dap-hydra
+        :desc "dap debug restart" "r" #'dap-debug-restart
+        :desc "dap debug"         "s" #'dap-debug
+        :desc "dap disconnect"    "q" #'dap-disconnect
+
+        ;; debug
+        :prefix ("dd" . "Debug")
+        :desc "dap debug recent"  "r" #'dap-debug-recent
+        :desc "dap debug last"    "l" #'dap-debug-last
+
+        ;; eval
+        :prefix ("de" . "Eval")
+        :desc "eval"                "e" #'dap-eval
+        :desc "eval region"         "r" #'dap-eval-region
+        :desc "eval thing at point" "s" #'dap-eval-thing-at-point
+        :desc "add expression"      "a" #'dap-ui-expressions-add
+        :desc "remove expression"   "d" #'dap-ui-expressions-remove
+
+        :prefix ("db" . "Breakpoint")
+        :desc "dap breakpoint toggle"      "b" #'dap-breakpoint-toggle
+        :desc "dap breakpoint condition"   "c" #'dap-breakpoint-condition
+        :desc "dap breakpoint hit count"   "h" #'dap-breakpoint-hit-condition
+        :desc "dap breakpoint log message" "l" #'dap-breakpoint-log-message))
 
 (defun open-buffer-in-new-frame-and-close-original ()
   "Move the current buffer to a new frame and close the window in the original frame."
