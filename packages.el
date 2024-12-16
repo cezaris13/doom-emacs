@@ -70,3 +70,7 @@
 (package! flycheck-rust)
 
 (package! flycheck-inline)
+
+(package! svelte-mode)
+
+(package! apheleia)

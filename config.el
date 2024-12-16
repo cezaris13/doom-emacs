@@ -240,6 +240,11 @@
         "s-L" `tide-format)
   )
 
+(after! svelte-mode
+  (map! :desc "Format region or buffer"
+        "s-L" `apheleia-format-buffer)
+  )
+
 ;; mac
 (map! :desc "Format region or buffer"
       "s-L" `+format/region-or-buffer)
@@ -353,6 +358,30 @@
 
 (add-hook 'dap-terminated-hook 'my/delete-dap-buffers-on-termination)
 (add-hook 'dap-terminated-hook #'doom-modeline-update-debug-dap)
+
+
+(defvar my-eshell-was-active nil
+  "Flag to remember if any Eshell buffer was active before starting DAP.")
+
+(defun my/dap-start-hook ()
+  "Hook to toggle Eshell off when starting DAP by checking all existing buffers."
+  (let ((eshell-buffer (cl-find-if (lambda (buf)
+                                    (with-current-buffer buf
+                                      (eq major-mode 'eshell-mode)))
+                                  (buffer-list))))
+    (when eshell-buffer
+      (setq my-eshell-was-active t)
+      (eshell/toggle))))
+
+(defun my/dap-end-hook ()
+  "Hook to toggle Eshell back on if it was active before DAP."
+  (when my-eshell-was-active
+    (eshell/toggle)
+    (setq my-eshell-was-active nil)))
+
+;; Hook into DAP mode
+(add-hook 'dap-session-started-hook 'my/dap-start-hook)
+(add-hook 'dap-session-terminated-hook 'my/dap-end-hook)
 
 (after! dap-mode
   (require 'dap-cpptools)
