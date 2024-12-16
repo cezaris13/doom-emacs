@@ -28,10 +28,11 @@
   )
 
 ;; Do not extend emacs src block begin and end
-(custom-set-faces
-  '(org-block-begin-line ((t (:extend nil))))
-  '(org-block-end-line ((t (:extend nil))))
-  )
+(add-hook 'org-mode-hook
+          (lambda ()
+            (custom-set-faces
+             '(org-block-begin-line ((t (:extend nil))))
+             '(org-block-end-line ((t (:extend nil)))))))
 
 ;; Add custom image to emacs home screen
 ;; note- if you comment this line, the logo will appear on start screen, but opening new buffer, window, etc. will show doom logo
