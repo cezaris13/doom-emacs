@@ -333,6 +333,19 @@
 )
 
 (setq dap-auto-configure-features '(sessions locals breakpoints))
+(defun my/delete-buffers-by-mode (mode)
+  "Delete all buffers with the given major mode."
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (when (eq major-mode mode)
+        (kill-buffer buf)))))
+
+(defun my/delete-dap-buffers-on-termination (&rest _args)
+  "Delete buffers with dap-mode when dap session terminates."
+  (my/delete-buffers-by-mode 'special-mode))
+
+(add-hook 'dap-terminated-hook 'my/delete-dap-buffers-on-termination)
+(add-hook 'dap-terminated-hook #'doom-modeline-update-debug-dap)
 
 (after! dap-mode
   (require 'dap-cpptools)
