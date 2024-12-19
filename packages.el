@@ -74,3 +74,5 @@
 (package! svelte-mode)
 
 (package! apheleia)
+
+(package! ein)

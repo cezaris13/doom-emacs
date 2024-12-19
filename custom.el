@@ -8,7 +8,7 @@
  '(org-agenda-files '("~/.config/doom/config.org"))
  '(org-fontify-quote-and-verse-blocks t)
  '(package-selected-packages
-   '(apheleia svelte-mode minimap quick-peek flycheck-rust flycheck-inline syslog-mode lox-mode xml-format bnf-mode dap-mode format-all tramp-auto-auth ivy-posframe ivy vdiff vc-msg magit language-id json-reformat inheritenv git-messenger all-the-icons)))
+   '(ein code-cells apheleia svelte-mode minimap quick-peek flycheck-rust flycheck-inline syslog-mode lox-mode xml-format bnf-mode dap-mode format-all tramp-auto-auth ivy-posframe ivy vdiff vc-msg magit language-id json-reformat inheritenv git-messenger all-the-icons)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

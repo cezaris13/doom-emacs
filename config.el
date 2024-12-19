@@ -148,17 +148,30 @@
   (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
   :config
   (defun my-csharp-mode-setup ()
-    (omnisharp-mode)
-    (company-mode)
-    (flycheck-mode)
-    (setq indent-tabs-mode nil)
-    (setq c-syntactic-indentation t)
-    (c-set-style "ellemtel")
-    (setq c-basic-offset 4)
-    (setq truncate-lines t)
-    (setq tab-width 4)
-    (setq evil-shift-width 4)
-    )
+     (omnisharp-mode)
+     (company-mode)
+     (flycheck-mode)
+     (setq c-indent-level 4)
+     (setq c-basic-offset 4)
+     (setq tab-width 4)
+     (setq evil-shift-width 4)
+     (setq indent-tabs-mode nil)
+     (setq c-syntactic-indentation t)
+     (setq truncate-lines t)
+     ;; Customizing indentation for K&R style in C#
+     (setq c-offsets-alist
+           '((statement-cont . 4)         ;; Continuation line indentation
+             (substatement-open . 0)      ;; No extra indent for { after control statements
+             (inline-open . 0)            ;; No indent for { in inline functions
+             (block-open . 0)             ;; Same here for blocks
+             (brace-list-open . 0)        ;; No indent for { in lists
+             (brace-list-close . 0)       ;; No indent for } in lists
+             (brace-entry-open . 0)))     ;; No indent for { in brace entries
+
+     (add-hook 'csharp-mode-hook 'format-all-mode)
+     (setq format-all-formatters
+           '((csharp-mode . "clang-format")))
+     )
   :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
 
 (defun open-external-file-explorer ()
@@ -333,16 +346,61 @@
             )
          )
     )
-   ;; disable company mode in remote
-    ;; (add-hook! 'eshell-directory-change-hook
-    ;;     (company-mode
-    ;;        (if (file-remote-p default-directory)
-    ;;            -1
-    ;;            +1
-    ;;        )
-    ;;     )
-    ;; )
 )
+;; (defun eshell_toggle  (arg &optional command)
+;;   "Toggle eshell popup window."
+;;   (interactive "P")
+;;   (let ((eshell-buffer
+;;          (get-buffer-create
+;;           (format "*doom:eshell-popup:%s*"
+;;                   (if (bound-and-true-p persp-mode)
+;;                       (safe-persp-name (get-current-persp))
+;;                     "main"))))
+;;         confirm-kill-processes
+;;         current-prefix-arg)
+;;     (when arg
+;;       (when-let (win (get-buffer-window eshell-buffer))
+;;         (delete-window win))
+;;       (when (buffer-live-p eshell-buffer)
+;;         (with-current-buffer eshell-buffer
+;;           (fundamental-mode)
+;;           (erase-buffer))))
+;;     (if-let (win (get-buffer-window eshell-buffer))
+;;         (let (confirm-kill-processes)
+;;           (delete-window win)
+;;           (ignore-errors (kill-buffer eshell-buffer)))
+;;       (with-current-buffer eshell-buffer
+;;         (doom-mark-buffer-as-real-h)
+;;         (if (eq major-mode 'eshell-mode)
+;;             (run-hooks 'eshell-mode-hook)
+;;           (eshell-mode))
+;;         (when command
+;;           (+eshell-run-command command eshell-buffer)))
+;;       (pop-to-buffer eshell-buffer))))
+
+;; (defun custom-eshell-toggle ()
+;;   "Toggle Eshell: Focus it if it is open but not focused, or open it if it doesn't exist, or close it if it is focused."
+;;   (interactive)
+;;       (let ((eshell-buffer (cl-find-if (lambda (buf)
+;;                                          (with-current-buffer buf
+;;                                            (eq major-mode 'eshell-mode)))
+;;                                        (buffer-list))))
+;;         (cond
+;;          ;; If eshell is open and focused, close it
+;;          ((and eshell-buffer (eq (current-buffer) eshell-buffer))
+;;           ((eshell_toggle ())))
+
+;;          ;; If eshell is open but not focused, switch to it
+;;          ((and eshell-buffer (not (eq (current-buffer) eshell-buffer)))
+;;           (switch-to-buffer eshell-buffer))
+
+;;          ;; If eshell is not open, create a new eshell buffer
+;;          ((eshell_toggle ())))))
+
+;; (map! :n "SPC o e" nil)
+
+;; (map! :desc "custom toggle eshell"
+      ;; "SPC o z" 'eshell_toggle)
 
 (setq dap-auto-configure-features '(sessions locals breakpoints))
 (defun my/delete-buffers-by-mode (mode)
@@ -476,3 +534,5 @@
 (custom-set-faces
  '(minimap-active-region-background
    ((t (:background "#363646")))))
+
+(setq ein:output-area-inlined-images t)
