@@ -536,3 +536,16 @@
    ((t (:background "#363646")))))
 
 (setq ein:output-area-inlined-images t)
+(setq ein:markdown-enable-math t)
+
+(map! :map ein-mode-map
+      :leader
+      :prefix ("j" . "ein (jupyter)")
+      ;; basics
+      :desc "ein execute above"          "a" #'ein:worksheet-execute-all-cells-above
+      :desc "ein execute below"       "b" #'ein:worksheet-execute-all-cells-below
+      :desc "ein execute all"      "x" #'ein:worksheet-execute-all-cells))
+
+;; (custom-set-faces
+;;  '(ein:basecell-input-prompt-face
+;;   ((t (:background "#252535" :foreground "#7FB4CA")))) ;; Adjust colors as needed
