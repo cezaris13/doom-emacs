@@ -781,11 +781,11 @@ There are two ways to load a theme. Both assume the theme is installed and avail
       :desc "save jupyter"               "s" #'ein:notebook-save-notebook-command-km
       :desc "stop ein server"            "q" #'ein:stop
       :desc "ein execute all"            "x" #'ein:worksheet-execute-all-cells
-      ))
+      )
+
 #+end_src
 
 #+RESULTS:
-: ein:stop
 
 ** Markdown
 #+begin_src emacs-lisp tangle :yes
@@ -820,8 +820,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
    (add-hook 'post-command-hook #'nb/refontify-on-linemove nil t))
 
  (add-hook 'markdown-mode-hook #'nb/markdown-unhighlight)
-
 #+end_src
 
 #+RESULTS:
-| doom--setq-fill-nobreak-predicate-for-markdown-mode-h | nb/markdown-unhighlight | +lookup--init-markdown-mode-handlers-h | evil-markdown-mode | doom--enable-+javascript-npm-mode-in-markdown-mode-h | +corfu-add-cape-elisp-block-h |
+| doom--setq-fill-nobreak-predicate-for-markdown-mode-h | (lambda nil (setq markdown-enable-math t) (setq font-latex-match-script nil) (preview-mode 1)) | nb/markdown-unhighlight | +lookup--init-markdown-mode-handlers-h | evil-markdown-mode | doom--enable-+javascript-npm-mode-in-markdown-mode-h | +corfu-add-cape-elisp-block-h |

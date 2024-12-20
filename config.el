@@ -553,7 +553,8 @@
       :desc "save jupyter"               "s" #'ein:notebook-save-notebook-command-km
       :desc "stop ein server"            "q" #'ein:stop
       :desc "ein execute all"            "x" #'ein:worksheet-execute-all-cells
-      ))
+      )
+
 
 (defvar nb/current-line '(0 . 0)
   "(start . end) of current line in current buffer")

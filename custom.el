@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(texfrag zmq xml-format vdiff vc-msg syslog-mode svelte-mode simple-httpd quick-peek minimap magit lox-mode json-reformat ivy-posframe git-messenger format-all flycheck-rust flycheck-inline ein dap-mode code-cells bnf-mode apheleia all-the-icons)))
+   '(texfrag markdown-preview-mode math-preview px zmq xml-format vdiff vc-msg syslog-mode svelte-mode simple-httpd quick-peek minimap magit lox-mode json-reformat ivy-posframe git-messenger format-all flycheck-rust flycheck-inline ein dap-mode code-cells bnf-mode apheleia all-the-icons)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
