@@ -21,6 +21,7 @@
   - [[#minimap][Minimap]]
   - [[#additional-info][Additional info]]
   - [[#ein-mode][Ein mode]]
+  - [[#markdown][Markdown]]
 
 * Configuration
 ** User data
@@ -765,19 +766,62 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 (setq ein:output-area-inlined-images t)
 (setq ein:markdown-enable-math t)
 
+(custom-set-faces
+ '(ein:basecell-input-area-face
+   ((t (:background "#363646"))))
+ )
+
 (map! :map ein-mode-map
       :leader
       :prefix ("j" . "ein (jupyter)")
       ;; basics
       :desc "ein execute above"          "a" #'ein:worksheet-execute-all-cells-above
-      :desc "ein execute below"       "b" #'ein:worksheet-execute-all-cells-below
-      :desc "ein execute all"      "x" #'ein:worksheet-execute-all-cells))
+      :desc "ein execute below"          "b" #'ein:worksheet-execute-all-cells-below
+      :desc "run ein server"             "r" #'ein:run
+      :desc "save jupyter"               "s" #'ein:notebook-save-notebook-command-km
+      :desc "stop ein server"            "q" #'ein:stop
+      :desc "ein execute all"            "x" #'ein:worksheet-execute-all-cells
+      ))
+#+end_src
 
-;; (custom-set-faces
-;;  '(ein:basecell-input-prompt-face
-;;   ((t (:background "#252535" :foreground "#7FB4CA")))) ;; Adjust colors as needed
+#+RESULTS:
+: ein:stop
+
+** Markdown
+#+begin_src emacs-lisp tangle :yes
+ (defvar nb/current-line '(0 . 0)
+   "(start . end) of current line in current buffer")
+ (make-variable-buffer-local 'nb/current-line)
+
+ (defun nb/unhide-current-line (limit)
+   "Font-lock function"
+   (let ((start (max (point) (car nb/current-line)))
+         (end (min limit (cdr nb/current-line))))
+     (when (< start end)
+       (remove-text-properties start end
+                       '(invisible t display "" composition ""))
+       (goto-char limit)
+       t)))
+
+ (defun nb/refontify-on-linemove ()
+   "Post-command-hook"
+   (let* ((start (line-beginning-position))
+          (end (line-beginning-position 2))
+          (needs-update (not (equal start (car nb/current-line)))))
+     (setq nb/current-line (cons start end))
+     (when needs-update
+       (font-lock-fontify-block 3))))
+
+ (defun nb/markdown-unhighlight ()
+   "Enable markdown concealling"
+   (interactive)
+   (markdown-toggle-markup-hiding 'toggle)
+   (font-lock-add-keywords nil '((nb/unhide-current-line)) t)
+   (add-hook 'post-command-hook #'nb/refontify-on-linemove nil t))
+
+ (add-hook 'markdown-mode-hook #'nb/markdown-unhighlight)
 
 #+end_src
 
 #+RESULTS:
-: ein:worksheet-execute-all-cells
+| doom--setq-fill-nobreak-predicate-for-markdown-mode-h | nb/markdown-unhighlight | +lookup--init-markdown-mode-handlers-h | evil-markdown-mode | doom--enable-+javascript-npm-mode-in-markdown-mode-h | +corfu-add-cape-elisp-block-h |
