@@ -550,11 +550,18 @@
       :desc "ein execute above"          "a" #'ein:worksheet-execute-all-cells-above
       :desc "ein execute below"          "b" #'ein:worksheet-execute-all-cells-below
       :desc "run ein server"             "r" #'ein:run
+      :desc "ein rename notebook"        "R" #'ein:notebook-rename-command-km
       :desc "save jupyter"               "s" #'ein:notebook-save-notebook-command-km
       :desc "stop ein server"            "q" #'ein:stop
       :desc "ein execute all"            "x" #'ein:worksheet-execute-all-cells
       )
 
+(add-hook! 'ein:ipynb-mode-hook
+  ;; By adding it to this hook, we can be sure that the server
+  ;; won't be started until the buffer is visible (prevents a
+  ;; cascade of new processes when opening multiple *.ipynb files
+  ;; all at once.
+  (add-hook 'doom-switch-buffer-hook #'ein:process-open-notebook nil 'local))
 
 (defvar nb/current-line '(0 . 0)
   "(start . end) of current line in current buffer")
