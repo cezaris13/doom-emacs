@@ -554,6 +554,13 @@
       :desc "save jupyter"               "s" #'ein:notebook-save-notebook-command-km
       :desc "stop ein server"            "q" #'ein:stop
       :desc "ein execute all"            "x" #'ein:worksheet-execute-all-cells
+
+      ;; cell
+      :prefix ("jc" . "Debug")
+      :desc "ein new cell above"         "a" #'ein:worksheet-insert-cell-above
+      :desc "ein new cell below"         "b" #'ein:worksheet-insert-cell-below
+      :desc "ein change cell type"       "c" #'ein:worksheet-change-cell-type
+      :desc "ein delete current cell"    "d" #'ein:worksheet-delete-cell
       )
 
 (add-hook! 'ein:ipynb-mode-hook
