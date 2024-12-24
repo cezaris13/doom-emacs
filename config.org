@@ -19,9 +19,9 @@
   - [[#frame-management][Frame management]]
   - [[#flycheck][Flycheck]]
   - [[#minimap][Minimap]]
-  - [[#additional-info][Additional info]]
   - [[#ein-mode][Ein mode]]
   - [[#markdown][Markdown]]
+  - [[#additional-info][Additional info]]
 
 * Configuration
 ** User data
@@ -390,17 +390,14 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 *** Format whole buffer
 #+begin_src emacs-lisp :tangle yes
 ;; TODO
-(after! typescript-mode
-  (map! :desc "Format region or buffer" ;; fix this, in python it is formatter with this.
-        "s-L" `tide-format)
-  )
+(use-package format-all
+  :ensure t
+  :hook
+  ((json-mode . format-all-mode)
+   (typescript-mode . format-all-mode)
+   (svelte-mode . format-all-mode)))
 
-(after! svelte-mode
-  (map! :desc "Format region or buffer"
-        "s-L" `apheleia-format-buffer)
-  )
-
-;; mac
+;; Mac
 (map! :desc "Format region or buffer"
       "s-L" `+format/region-or-buffer)
 
@@ -750,17 +747,6 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 
  #+RESULTS:
 
-** Additional info
-- Here are some additional functions/macros that could help you configure Doom:
-  + `load!' for loading external *.el files relative to this one
-  + `use-package!' for configuring packages
-  + `after!' for running code after a package has loaded
-  + `add-load-path!' for adding directories to the `load-path', relative to this file. Emacs searches the `load-path' when you load packages with `require' or `use-package'.
-  + `map!' for binding new keys
-- To get information about any of these functions/macros, move the cursor over the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-- This will open documentation for it, including demos of how they are used.
-- You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implement
-(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 ** Ein mode
 #+begin_src emacs-lisp :tangle yes
 (setq ein:output-area-inlined-images t)
@@ -838,3 +824,15 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 
 #+RESULTS:
 | doom--setq-fill-nobreak-predicate-for-markdown-mode-h | (lambda nil (setq markdown-enable-math t) (setq font-latex-match-script nil) (preview-mode 1)) | nb/markdown-unhighlight | +lookup--init-markdown-mode-handlers-h | evil-markdown-mode | doom--enable-+javascript-npm-mode-in-markdown-mode-h | +corfu-add-cape-elisp-block-h |
+
+** Additional info
+- Here are some additional functions/macros that could help you configure Doom:
+  + `load!' for loading external *.el files relative to this one
+  + `use-package!' for configuring packages
+  + `after!' for running code after a package has loaded
+  + `add-load-path!' for adding directories to the `load-path', relative to this file. Emacs searches the `load-path' when you load packages with `require' or `use-package'.
+  + `map!' for binding new keys
+- To get information about any of these functions/macros, move the cursor over the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+- This will open documentation for it, including demos of how they are used.
+- You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implement
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)

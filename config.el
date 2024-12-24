@@ -248,17 +248,14 @@
       "C-/" 'comment-line)
 
 ;; TODO
-(after! typescript-mode
-  (map! :desc "Format region or buffer" ;; fix this, in python it is formatter with this.
-        "s-L" `tide-format)
-  )
+(use-package format-all
+  :ensure t
+  :hook
+  ((json-mode . format-all-mode)
+   (typescript-mode . format-all-mode)
+   (svelte-mode . format-all-mode)))
 
-(after! svelte-mode
-  (map! :desc "Format region or buffer"
-        "s-L" `apheleia-format-buffer)
-  )
-
-;; mac
+;; Mac
 (map! :desc "Format region or buffer"
       "s-L" `+format/region-or-buffer)
 
