@@ -228,10 +228,20 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   :custom-face
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
+
+(use-package general
+  :config
+  (general-define-key
+   :prefix "SPC"
+   :states '(normal visual motion)
+   :keymaps 'rust-mode-map
+   "m r r" 'lsp-rust-analyzer-run
+   "m r t" 'lsp-rust-analyzer-related-tests
+   "m d" 'lsp-rust-analyzer-debug))
 #+end_src
 
 #+RESULTS:
-| lsp-completion-mode | +lsp-optimization-mode | +lookup--init-lsp-mode-handlers-h | lsp-enable-which-key-integration | lsp-ui-mode |
+: t
 
 *** C#
 #+begin_src emacs-lisp :tangle yes

@@ -141,6 +141,16 @@
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
 
+(use-package general
+  :config
+  (general-define-key
+   :prefix "SPC"
+   :states '(normal visual motion)
+   :keymaps 'rust-mode-map
+   "m r r" 'lsp-rust-analyzer-run
+   "m r t" 'lsp-rust-analyzer-related-tests
+   "m d" 'lsp-rust-analyzer-debug))
+
 (use-package omnisharp
   :after company
   :init
