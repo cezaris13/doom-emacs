@@ -608,3 +608,8 @@
   (add-hook 'post-command-hook #'nb/refontify-on-linemove nil t))
 
 (add-hook 'markdown-mode-hook #'nb/markdown-unhighlight)
+
+(add-hook 'org-mode-hook 'org-fragtog-mode)
+
+(setenv "PATH" (concat ":/Library/TeX/texbin/" (getenv "PATH")))
+(add-to-list 'exec-path "/Library/TeX/texbin/")

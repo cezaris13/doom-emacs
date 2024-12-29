@@ -76,3 +76,5 @@
 (package! apheleia)
 
 (package! ein)
+
+(package! org-fragtog)
