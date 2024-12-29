@@ -853,7 +853,13 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 (add-to-list 'exec-path "/Library/TeX/texbin/")
 
 (add-hook 'org-mode-hook 'org-fragtog-mode)
+
+(after! org
+  (map! :map org-mode-map
+        :localleader
+        :desc "Toggle centered-window-mode"
+        "w" #'centered-window-mode))
+
 #+end_src
 
 #+RESULTS:
-| er/add-org-mode-expansions | #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2] | org-fragtog-mode | (lambda nil (org-bullets-mode 1)) | (closure ((hook . org-mode-hook)) (&rest _) (progn (let ((tail '(after-change-major-mode-hook))) (while tail (let ((hook (car tail))) (let ((tail (list #'(lambda (&rest _) (if (derived-mode-p 'org-mode) (progn (setq tab-width 8))))))) (while tail (let ((func (car tail))) (add-hook hook func nil t) (setq tail (cdr tail))))) (setq tail (cdr tail)))))) (add-hook 'save-place-after-find-file-hook #'+org-make-last-point-visible-h nil t)) | +lookup--init-org-mode-handlers-h | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-fold-show-all append local] 5] | (lambda nil (custom-set-faces '(org-block-begin-line ((t (:extend nil)))) '(org-block-end-line ((t (:extend nil)))))) | doom-disable-show-paren-mode-h | doom-disable-show-trailing-whitespace-h | evil-org-mode | org-eldoc-load | toc-org-enable | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | embrace-org-mode-hook | +corfu-add-cape-elisp-block-h | +literate-enable-recompile-h |

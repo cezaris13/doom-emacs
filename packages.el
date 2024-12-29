@@ -78,3 +78,5 @@
 (package! ein)
 
 (package! org-fragtog)
+
+(package! centered-window)

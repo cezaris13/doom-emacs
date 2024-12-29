@@ -609,7 +609,13 @@
 
 (add-hook 'markdown-mode-hook #'nb/markdown-unhighlight)
 
-(add-hook 'org-mode-hook 'org-fragtog-mode)
-
 (setenv "PATH" (concat ":/Library/TeX/texbin/" (getenv "PATH")))
 (add-to-list 'exec-path "/Library/TeX/texbin/")
+
+(add-hook 'org-mode-hook 'org-fragtog-mode)
+
+(after! org
+  (map! :map org-mode-map
+        :localleader
+        :desc "Toggle centered-window-mode"
+        "w" #'centered-window-mode))
