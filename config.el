@@ -619,3 +619,9 @@
         :localleader
         :desc "Toggle centered-window-mode"
         "w" #'centered-window-mode))
+
+(setq org-format-latex-options
+              (plist-put org-format-latex-options :scale 1.7))
+
+(setq org-highlight-latex-and-related '(latex script entities))
+
