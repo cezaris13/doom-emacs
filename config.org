@@ -32,6 +32,10 @@
 (setq user-full-name "Pijus Petkevičius"
       user-mail-address "pijus.petkevicius314@gmail.com")
 #+end_src
+
+#+RESULTS:
+: pijus.petkevicius314@gmail.com
+
 ** Font
 - Doom exposes five (optional) variables for controlling fonts in Doom. Here are the three important ones:
   + `doom-font'
@@ -49,6 +53,7 @@
 #+end_src
 
 #+RESULTS:
+: #<font-spec nil nil Symbola nil nil regular nil nil 22 nil nil nil nil>
 
 ** Theme
 There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
@@ -132,6 +137,8 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 (setq auto-window-vscroll nil)
 #+end_src
 
+#+RESULTS:
+
 ** Ligatures
 #+begin_src emacs-lisp :tangle yes
 (plist-put! +ligatures-extra-symbols
@@ -203,7 +210,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 #+end_src
 
 #+RESULTS:
-: t
+: 3
 
 *** Rust
 #+begin_src emacs-lisp :tangle yes
@@ -291,6 +298,9 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   (call-process-shell-command "dolphin . &" nil 0))
 (global-set-key (kbd "<f3>") 'open-external-file-explorer)
 #+end_src
+
+#+RESULTS:
+: open-external-file-explorer
 
 *** Open external terminal
 #+begin_src emacs-lisp :tangle yes
@@ -396,8 +406,6 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 (map! :desc "Comment code in the file"
       "C-/" 'comment-line)
 #+end_src
-
-#+RESULTS:
 *** Format whole buffer
 #+begin_src emacs-lisp :tangle yes
 ;; TODO
@@ -447,6 +455,9 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 (setq calendar-week-start-day 1);; weeks start on monday
 #+end_src
 
+#+RESULTS:
+: 1
+
 *** TODO modes
 #+begin_src emacs-lisp :tangle yes
 (after! org
@@ -478,6 +489,9 @@ There are two ways to load a theme. Both assume the theme is installed and avail
           ("KILL" . +org-todo-cancel)))
   )
 #+end_src
+
+#+RESULTS:
+: (([-] . +org-todo-active) (STRT . +org-todo-active) ([?] . +org-todo-onhold) (WAIT . +org-todo-onhold) (HOLD . +org-todo-onhold) (PROJ . +org-todo-project) (LECTURE :foreground orange) (ROUTINE :foreground violet) (NO . +org-todo-cancel) (KILL . +org-todo-cancel))
 
 *** Org bullets
 #+begin_src emacs-lisp :tangle yes
@@ -521,8 +535,6 @@ There are two ways to load a theme. Both assume the theme is installed and avail
   (setq tramp-default-remote-shell "/bin/bash")
   )
 #+end_src
-
-#+RESULTS:
 
 ** Eshell
 #+begin_src emacs-lisp :tangle yes
@@ -595,7 +607,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 #+end_src
 
 #+RESULTS:
-: custom-eshell-toggle
+:  config.org  Sun Jan  5 14:44:46 2025
 
 ** Dap mode
 #+begin_src emacs-lisp :tangle yes
@@ -701,6 +713,9 @@ There are two ways to load a theme. Both assume the theme is installed and avail
         :desc "dap breakpoint log message" "l" #'dap-breakpoint-log-message))
 
 #+end_src
+
+#+RESULTS:
+: dap-breakpoint-log-message
 
 ** Frame management
 #+RESULTS:
@@ -834,7 +849,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 #+end_src
 
 #+RESULTS:
-| doom--setq-fill-nobreak-predicate-for-markdown-mode-h | (lambda nil (setq markdown-enable-math t) (setq font-latex-match-script nil) (preview-mode 1)) | nb/markdown-unhighlight | +lookup--init-markdown-mode-handlers-h | evil-markdown-mode | doom--enable-+javascript-npm-mode-in-markdown-mode-h | +corfu-add-cape-elisp-block-h |
+| doom--setq-fill-nobreak-predicate-for-markdown-mode-h | nb/markdown-unhighlight | +lookup--init-markdown-mode-handlers-h | evil-markdown-mode | doom--enable-+javascript-npm-mode-in-markdown-mode-h | +corfu-add-cape-elisp-block-h |
 
 ** Additional info
 - Here are some additional functions/macros that could help you configure Doom:
@@ -865,6 +880,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 
 (setq org-highlight-latex-and-related '(latex script entities))
 
+;; (setq org-babel-load-languages '((latex . t) (latex-macros . t)))
 
 #+end_src
 

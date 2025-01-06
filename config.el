@@ -625,3 +625,4 @@
 
 (setq org-highlight-latex-and-related '(latex script entities))
 
+;; (setq org-babel-load-languages '((latex . t) (latex-macros . t)))
