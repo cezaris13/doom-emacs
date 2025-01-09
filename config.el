@@ -609,8 +609,7 @@
 
 (add-hook 'markdown-mode-hook #'nb/markdown-unhighlight)
 
-(setenv "PATH" (concat ":/Library/TeX/texbin/" (getenv "PATH")))
-(add-to-list 'exec-path "/Library/TeX/texbin/")
+(exec-path-from-shell-initialize)
 
 (add-hook 'org-mode-hook 'org-fragtog-mode)
 

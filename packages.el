@@ -80,3 +80,7 @@
 (package! org-fragtog)
 
 (package! centered-window)
+
+(package! poly-org)
+
+(package! exec-path-from-shell)
