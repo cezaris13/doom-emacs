@@ -512,7 +512,7 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 (add-hook 'c-mode-hook #'rainbow-mode)
 ;; scrolling in pdf file
 (setq doc-view-continuous t)
-
+(add-hook 'prog-mode-hook #'rainbow-mode)
 #+end_src
 
 #+RESULTS:
@@ -880,7 +880,6 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 (setq org-highlight-latex-and-related '(latex script entities))
 
 ;; (setq org-babel-load-languages '((latex . t) (latex-macros . t)))
-
 #+end_src
 
 #+RESULTS:

@@ -84,3 +84,5 @@
 (package! poly-org)
 
 (package! exec-path-from-shell)
+
+(package! rainbow-mode)

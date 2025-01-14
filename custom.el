@@ -7,7 +7,7 @@
    '(:foreground default :background default :scale 1.7 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
      ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(package-selected-packages
-   '(exec-path-from-shell poly-org centered-window texfrag org-fragtog markdown-preview-mode math-preview px zmq xml-format vdiff vc-msg syslog-mode svelte-mode simple-httpd quick-peek minimap magit lox-mode json-reformat ivy-posframe git-messenger format-all flycheck-rust flycheck-inline ein dap-mode code-cells bnf-mode apheleia all-the-icons)))
+   '(rainbow-mode exec-path-from-shell poly-org centered-window texfrag org-fragtog markdown-preview-mode math-preview px zmq xml-format vdiff vc-msg syslog-mode svelte-mode simple-httpd quick-peek minimap magit lox-mode json-reformat ivy-posframe git-messenger format-all flycheck-rust flycheck-inline ein dap-mode code-cells bnf-mode apheleia all-the-icons)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

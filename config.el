@@ -326,6 +326,7 @@
 (add-hook 'c-mode-hook #'rainbow-mode)
 ;; scrolling in pdf file
 (setq doc-view-continuous t)
+(add-hook 'prog-mode-hook #'rainbow-mode)
 
 (with-eval-after-load 'tramp
   (eval-when-compile (require 'tramp))
@@ -453,7 +454,7 @@
 
   (add-hook 'rustic-mode-hook (lambda ()
                                 (dap-register-debug-template "Rust LLDB Debug Configuration"
-	                                                     (list :type "cppdbg"
+	                                                        (list :type "cppdbg"
 	                                                           :request "launch"
 	                                                           :name "Rust::Run"
 	                                                           :MIMode "lldb"
