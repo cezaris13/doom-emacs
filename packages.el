@@ -86,3 +86,5 @@
 (package! exec-path-from-shell)
 
 (package! rainbow-mode)
+
+(package! importmagic)

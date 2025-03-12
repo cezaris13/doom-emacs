@@ -20,12 +20,12 @@
 
 ;; Magit blame colors
 (custom-set-faces
-  '(magit-blame-name ((t (:background "#363646" :weight bold))))
-  '(magit-blame-summary ((t (:background "#363646" :weight bold))))
-  '(magit-blame-heading ((t (:background "#363646" :weight bold))))
-  '(magit-blame-hash ((t (:background "#363646" :weight bold))))
-  '(magit-blame-date ((t (:background "#363646" :weight bold))))
-  )
+ '(magit-blame-name ((t (:background "#363646" :weight bold))))
+ '(magit-blame-summary ((t (:background "#363646" :weight bold))))
+ '(magit-blame-heading ((t (:background "#363646" :weight bold))))
+ '(magit-blame-hash ((t (:background "#363646" :weight bold))))
+ '(magit-blame-date ((t (:background "#363646" :weight bold))))
+ )
 
 ;; Do not extend emacs src block begin and end
 (add-hook 'org-mode-hook
@@ -158,30 +158,30 @@
   (add-hook 'csharp-mode-hook 'my-csharp-mode-setup)
   :config
   (defun my-csharp-mode-setup ()
-     (omnisharp-mode)
-     (company-mode)
-     (flycheck-mode)
-     (setq c-indent-level 4)
-     (setq c-basic-offset 4)
-     (setq tab-width 4)
-     (setq evil-shift-width 4)
-     (setq indent-tabs-mode nil)
-     (setq c-syntactic-indentation t)
-     (setq truncate-lines t)
-     ;; Customizing indentation for K&R style in C#
-     (setq c-offsets-alist
-           '((statement-cont . 4)         ;; Continuation line indentation
-             (substatement-open . 0)      ;; No extra indent for { after control statements
-             (inline-open . 0)            ;; No indent for { in inline functions
-             (block-open . 0)             ;; Same here for blocks
-             (brace-list-open . 0)        ;; No indent for { in lists
-             (brace-list-close . 0)       ;; No indent for } in lists
-             (brace-entry-open . 0)))     ;; No indent for { in brace entries
+    (omnisharp-mode)
+    (company-mode)
+    (flycheck-mode)
+    (setq c-indent-level 4)
+    (setq c-basic-offset 4)
+    (setq tab-width 4)
+    (setq evil-shift-width 4)
+    (setq indent-tabs-mode nil)
+    (setq c-syntactic-indentation t)
+    (setq truncate-lines t)
+    ;; Customizing indentation for K&R style in C#
+    (setq c-offsets-alist
+          '((statement-cont . 4)         ;; Continuation line indentation
+            (substatement-open . 0)      ;; No extra indent for { after control statements
+            (inline-open . 0)            ;; No indent for { in inline functions
+            (block-open . 0)             ;; Same here for blocks
+            (brace-list-open . 0)        ;; No indent for { in lists
+            (brace-list-close . 0)       ;; No indent for } in lists
+            (brace-entry-open . 0)))     ;; No indent for { in brace entries
 
-     (add-hook 'csharp-mode-hook 'format-all-mode)
-     (setq format-all-formatters
-           '((csharp-mode . "clang-format")))
-     )
+    (add-hook 'csharp-mode-hook 'format-all-mode)
+    (setq format-all-formatters
+          '((csharp-mode . "clang-format")))
+    )
   :bind (("C-c C-d" . 'omnisharp-run-code-action-refactoring)))
 
 (defun open-external-file-explorer ()
@@ -203,8 +203,8 @@
   (map! :desc "Open Find file in the project"
         "s-O" #'projectile-find-file))
 
-  ;; linux
-  (bind-key* "C-S-o" 'projectile-find-file)
+;; linux
+(bind-key* "C-S-o" 'projectile-find-file)
 
 (use-package! neotree
   :config
@@ -214,8 +214,8 @@
         "s-J" #'+neotree/find-this-file))
 
 
-  ;; linux
-  (bind-key* "C-S-j" '+neotree/find-this-file)
+;; linux
+(bind-key* "C-S-j" '+neotree/find-this-file)
 
 (defun find-references-under-cursor ()
   "Find references of the word under the cursor using projectile-find-references"
@@ -344,17 +344,17 @@
   )
 
 (after! eshell
-    (setq eshell-banner-message
+  (setq eshell-banner-message
         (format "%s %s\n"
-            (propertize (format " %s " (string-trim (buffer-name)))
-                'face 'doom-modeline-panel)
-            (propertize
-                (current-time-string)
-                'face 'font-lock-keyword-face
-            )
-         )
-    )
-)
+                (propertize (format " %s " (string-trim (buffer-name)))
+                            'face 'doom-modeline-panel)
+                (propertize
+                 (current-time-string)
+                 'face 'font-lock-keyword-face
+                 )
+                )
+        )
+  )
 ;; (defun eshell_toggle  (arg &optional command)
 ;;   "Toggle eshell popup window."
 ;;   (interactive "P")
@@ -408,7 +408,7 @@
 ;; (map! :n "SPC o e" nil)
 
 ;; (map! :desc "custom toggle eshell"
-      ;; "SPC o z" 'eshell_toggle)
+;; "SPC o z" 'eshell_toggle)
 
 (setq dap-auto-configure-features '(sessions locals breakpoints))
 (defun my/delete-buffers-by-mode (mode)
@@ -432,9 +432,9 @@
 (defun my/dap-start-hook ()
   "Hook to toggle Eshell off when starting DAP by checking all existing buffers."
   (let ((eshell-buffer (cl-find-if (lambda (buf)
-                                    (with-current-buffer buf
-                                      (eq major-mode 'eshell-mode)))
-                                  (buffer-list))))
+                                     (with-current-buffer buf
+                                       (eq major-mode 'eshell-mode)))
+                                   (buffer-list))))
     (when eshell-buffer
       (setq my-eshell-was-active t)
       (eshell/toggle))))
@@ -454,7 +454,7 @@
 
   (add-hook 'rustic-mode-hook (lambda ()
                                 (dap-register-debug-template "Rust LLDB Debug Configuration"
-	                                                        (list :type "cppdbg"
+	                                                     (list :type "cppdbg"
 	                                                           :request "launch"
 	                                                           :name "Rust::Run"
 	                                                           :MIMode "lldb"
@@ -572,11 +572,11 @@
       )
 
 (add-hook! 'ein:ipynb-mode-hook
-  ;; By adding it to this hook, we can be sure that the server
-  ;; won't be started until the buffer is visible (prevents a
-  ;; cascade of new processes when opening multiple *.ipynb files
-  ;; all at once.
-  (add-hook 'doom-switch-buffer-hook #'ein:process-open-notebook nil 'local))
+           ;; By adding it to this hook, we can be sure that the server
+           ;; won't be started until the buffer is visible (prevents a
+           ;; cascade of new processes when opening multiple *.ipynb files
+           ;; all at once.
+           (add-hook 'doom-switch-buffer-hook #'ein:process-open-notebook nil 'local))
 
 (defvar nb/current-line '(0 . 0)
   "(start . end) of current line in current buffer")
@@ -588,7 +588,7 @@
         (end (min limit (cdr nb/current-line))))
     (when (< start end)
       (remove-text-properties start end
-                      '(invisible t display "" composition ""))
+                              '(invisible t display "" composition ""))
       (goto-char limit)
       t)))
 
@@ -621,8 +621,42 @@
         "w" #'centered-window-mode))
 
 (setq org-format-latex-options
-              (plist-put org-format-latex-options :scale 1.7))
+      (plist-put org-format-latex-options :scale 1.7))
 
 (setq org-highlight-latex-and-related '(latex script entities))
 
 ;; (setq org-babel-load-languages '((latex . t) (latex-macros . t)))
+
+;; (with-eval-after-load 'company
+;;   (custom-set-faces
+;;    '(company-tooltip ((t (:background "#1f1f28" :foreground "#dcd7ba"))))
+;;    '(company-tooltip-selection ((t (:background "#3a3d4a" :foreground "#ffffff"))))
+;;    '(company-tooltip-common ((t (:foreground "#c8c093"))))
+;;    '(company-scrollbar-bg ((t (:background "#2a2e37"))))
+;;    '(company-scrollbar-fg ((t (:background "#727169"))))))
+
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :commands lsp-ui-mode
+;;   :config
+;;   (setq lsp-ui-sideline-enable t
+;;         lsp-ui-sideline-show-diagnostics t
+;;         lsp-ui-sideline-show-hover t
+;;         lsp-ui-doc-enable t))
+
+(custom-set-variables
+ '(flycheck-python-flake8-executable "python3")
+ '(flycheck-python-pycompile-executable "python3")
+ '(flycheck-python-pylint-executable "python3"))
+
+;; for import completion
+(add-hook 'python-mode-hook 'importmagic-mode)
+(add-hook 'flycheck-mode-hook #'flycheck-inline-mode)
+(add-hook 'lsp-diagnostics-mode-hook #'flycheck-inline-mode)
+
+
+;; (map! :desc "Format region or buffer"
+;;       "s-I" `importmagic-fix-symbol-at-point)
+
+;; ;; fix this
+;; (bind-key* "C-S-i" 'importmagic-fix-symbol-at-point)
