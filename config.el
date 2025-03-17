@@ -654,9 +654,4 @@
 (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)
 (add-hook 'lsp-diagnostics-mode-hook #'flycheck-inline-mode)
 
-
-;; (map! :desc "Format region or buffer"
-;;       "s-I" `importmagic-fix-symbol-at-point)
-
-;; ;; fix this
-;; (bind-key* "C-S-i" 'importmagic-fix-symbol-at-point)
+(map! "C-c i" #'importmagic-fix-symbol-at-point)
