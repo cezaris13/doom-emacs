@@ -655,3 +655,10 @@
 (add-hook 'lsp-diagnostics-mode-hook #'flycheck-inline-mode)
 
 (map! "C-c i" #'importmagic-fix-symbol-at-point)
+
+(defun custom-ediff-hook ()
+  (ediff-setup-keymap)
+  (define-key ediff-mode-map "j" 'ediff-next-difference)
+  (define-key ediff-mode-map "k" 'ediff-previous-difference))
+
+(add-hook 'ediff-mode-hook 'custom-ediff-hook)

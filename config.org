@@ -24,6 +24,7 @@
   - [[#additional-info][Additional info]]
   - [[#latex][LaTex]]
   - [[#python][Python]]
+  - [[#ediff][Ediff]]
 
 * Configuration
 ** User data
@@ -931,3 +932,12 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 #+end_src
 
 #+RESULTS:
+** Ediff
+#+begin_src emacs-lisp :tangle yes
+  (defun custom-ediff-hook ()
+    (ediff-setup-keymap)
+    (define-key ediff-mode-map "j" 'ediff-next-difference)
+    (define-key ediff-mode-map "k" 'ediff-previous-difference))
+
+  (add-hook 'ediff-mode-hook 'custom-ediff-hook)
+#+end_src
