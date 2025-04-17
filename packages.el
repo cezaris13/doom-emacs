@@ -88,3 +88,5 @@
 (package! rainbow-mode)
 
 (package! importmagic)
+
+(package! flycheck-projectile)

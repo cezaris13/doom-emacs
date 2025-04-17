@@ -14,7 +14,7 @@
   '(line-number-current-line :foreground "white")
   '(mode-line-inactive :background "dim gray" :foreground "white" :height 80)
   '(mode-line :background "#16161D" :height 80)
-  '(default :background "#1F1F28")
+  ;; '(default :background "#1F1F28")
   '(diff-hl-change :foreground "#A86E51")
   )
 
@@ -662,3 +662,15 @@
   (define-key ediff-mode-map "k" 'ediff-previous-difference))
 
 (add-hook 'ediff-mode-hook 'custom-ediff-hook)
+
+(defun my/flycheck-projectile-list-errors-focus ()
+  "Show Flycheck errors for the current Projectile project and focus the window."
+  (interactive)
+  (flycheck-projectile-list-errors)
+  (let ((buf (get-buffer "*Project errors*")))
+    (when buf
+      (pop-to-buffer buf))))
+
+(map! :leader
+      :desc "Flycheck Projectile Errors (Focus)"
+      "c p" #'my/flycheck-projectile-list-errors-focus)
