@@ -26,6 +26,7 @@
   - [[#python][Python]]
   - [[#ediff][Ediff]]
   - [[#projectile-flycheck][Projectile flycheck]]
+  - [[#latex-org-mode][Latex org mode]]
 
 * Configuration
 ** User data
@@ -955,4 +956,12 @@ There are two ways to load a theme. Both assume the theme is installed and avail
 (map! :leader
       :desc "Flycheck Projectile Errors (Focus)"
       "c p" #'my/flycheck-projectile-list-errors-focus)
+#+end_src
+** Latex org mode
+#+begin_src emacs-lisp :tangle yes
+(setq org-latex-create-formula-image-program 'imagemagick)
+(setq org-preview-latex-default-process 'imagemagick)
+(setq org-format-latex-options
+      (plist-put org-format-latex-options :imagemagick-command
+                 "convert -density %DPI% -background white -flatten %S %O"))
 #+end_src

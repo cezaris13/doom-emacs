@@ -674,3 +674,9 @@
 (map! :leader
       :desc "Flycheck Projectile Errors (Focus)"
       "c p" #'my/flycheck-projectile-list-errors-focus)
+
+(setq org-latex-create-formula-image-program 'imagemagick)
+(setq org-preview-latex-default-process 'imagemagick)
+(setq org-format-latex-options
+      (plist-put org-format-latex-options :imagemagick-command
+                 "convert -density %DPI% -background white -flatten %S %O"))
